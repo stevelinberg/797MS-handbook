@@ -1,4 +1,7 @@
+fig:img-slr1
 about
+authoring-guidelines
+resources
 simple-linear-regression
 tldr
 what-it-does
@@ -6,6 +9,7 @@ when-to-do-it
 how-to-do-it
 how-to-interpret-the-output
 where-to-learn-more
+notes
 multiple-linear-regression
 tldr-1
 what-it-does-1

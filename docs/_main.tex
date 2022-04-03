@@ -41,6 +41,46 @@
   hidelinks,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
 \usepackage{longtable,booktabs,array}
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
@@ -104,6 +144,18 @@ The intent is twofold:
   Force myself to learn these techniques better by carrying out the above.
 \end{enumerate}
 
+The main purpose of this work is to be \emph{simple}, not to be \emph{comprehensive}. We won't cover every facet of every technique, or every possible permutations of outcomes. The goal is to simply express the broad strokes and core concepts in a way that can be easily remembered, and to serve as a jumping-off point when more information is needed.
+
+\hypertarget{authoring-guidelines}{%
+\section{Authoring guidelines}\label{authoring-guidelines}}
+
+The goal is to have no more than a few short paragraphs for each section, and to keep each explanation of the meanings of outcome variables to one sentence each.
+
+\hypertarget{resources}{%
+\section{Resources}\label{resources}}
+
+A lot of the material from this work is from the class textbook, \citet{ISLR}. I also find UNC geneticist Josh Starmer's \href{https://www.youtube.com/channel/UCtYLUTtgS3k1Fg4y5tAhLbw}{StatQuest} video series on YouTube to be immensely helpful for simple explanations of statistics and machine learning concepts.
+
 \hypertarget{simple-linear-regression}{%
 \chapter{Simple Linear Regression}\label{simple-linear-regression}}
 
@@ -127,6 +179,14 @@ Look for a significant \(p\)-value for the predictor, and a reasonable \(R^2\)
 
 Simple linear regression is where it all begins; among the simplest of all of the regression techniques in analysis, which attempts to estimate a slope and an intercept line for a set of observations using a single predictor variable \(X\) and an output variable \(Y\). It uses ordinary least squares (OLS) to build its model, looking for the line through the mean of \(X\) and \(Y\) that has the smallest sum of squares between the predicted and observed values.
 
+
+
+\begin{figure}
+\includegraphics[width=16.03in]{images/3_1} \caption{Simple linear regression plot (source: \href{https://www.statlearning.com/}{ISLR2}, p.~62)}\label{fig:img-slr1}
+\end{figure}
+
+The figure above shows a plot of a simple linear regression, attempting to use the variable \texttt{TV} to predict \texttt{Sales.} The blue line is the line defined by the regression with its \(Y\) intercept and slope; the red dots are the actual observations of \texttt{Sales} for each measure of the predictor \texttt{TV} on the \(X\) axis. The thin blue lines are the error in the prediction.
+
 \hypertarget{when-to-do-it}{%
 \section{When to do it}\label{when-to-do-it}}
 
@@ -137,11 +197,103 @@ Linear regression requires a dataset with a continuous outcome variable; it is e
 \hypertarget{how-to-do-it}{%
 \section{How to do it}\label{how-to-do-it}}
 
+This example from \citet{ISLR} shows a simple linear regression of \textbf{medv} onto \textbf{lstat}, attempting to predict median housing prices from percentage of ``lower-status'' population in the Boston data set from the late 1970s.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm.fit }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(medv }\SpecialCharTok{\textasciitilde{}}\NormalTok{ lstat, }\AttributeTok{data =}\NormalTok{ Boston)}
+\FunctionTok{plot}\NormalTok{(Boston}\SpecialCharTok{$}\NormalTok{lstat, Boston}\SpecialCharTok{$}\NormalTok{medv)}
+\FunctionTok{abline}\NormalTok{(lm.fit, }\AttributeTok{lwd =} \DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+The results of the regression are stored in the output of \texttt{lm()}, and may be viewed with \texttt{summary()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(lm.fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = medv ~ lstat, data = Boston)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -15.168  -3.990  -1.318   2.034  24.500 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 34.55384    0.56263   61.41   <2e-16 ***
+## lstat       -0.95005    0.03873  -24.53   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 6.216 on 504 degrees of freedom
+## Multiple R-squared:  0.5441, Adjusted R-squared:  0.5432 
+## F-statistic: 601.6 on 1 and 504 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
 \hypertarget{how-to-interpret-the-output}{%
 \section{How to interpret the output}\label{how-to-interpret-the-output}}
 
+The output contains a lot of information, but the key points are:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{Adjusted\ R-squared}: 0.5432 is the percentage of the variation in the model that is explained by the fit's prediction, compared to just looking at how much the observations vary from their own average with no predictor variable.
+\item
+  \texttt{p-value}: \textless{} 2.2e-16 (basically zero) means that the model is (very) statistically significant, with a near-zero percent chance that the data in this set could have resulted from a random draw from the (unknown) population if there were no relationship between \texttt{medv} and \texttt{lstat}
+\item
+  \texttt{Estimated\ intercept} of 34.55 is the \(Y\) intercept on the graph, or the estimated value of \texttt{medv} when \texttt{lstat} is zero
+\item
+  \texttt{Estimated\ (lstat)}: -0.95 is the estimated coefficient of \texttt{lstat}, or the amount that \texttt{medv} changes by for each unit change in \texttt{lstat}.
+\end{itemize}
+
+The intercept and coefficient are \(\beta_0\) and \(\beta_1\), respectively, of the linear regression formula
+
+\[Y = \beta_0 + \beta_1X\]
+Substituting the coefficients and variables, we transform this to:
+
+\[\text{medv} = 34.55 - 0.95 \times \text{lstat}\]
+
+The low p-value shows that there is (almost) definitely a relationship between \texttt{medv} and \texttt{lstat}, but the \(R^2\) of 0.54 shows that the model only explains slightly more than half of the variation in the data. It's not a bad start, but we would probably want to find a model that explains more of it.
+
 \hypertarget{where-to-learn-more}{%
 \section{Where to learn more}\label{where-to-learn-more}}
+
+\begin{itemize}
+\tightlist
+\item
+  Chapter 3 - 3.1 in \citet{ISLR}
+\item
+  \href{https://www.youtube.com/watch?v=nk2CQITm_eo}{StatQuest: Linear Regression} - this goes into good depth on the meaning of the \(F\) statistic as well, and how it used to calculate the \(p\) value.
+\end{itemize}
+
+\hypertarget{notes}{%
+\section{Notes}\label{notes}}
+
+You can also do a scatterplot in ggplot2 and add a regression line with \texttt{geom\_smooth()}; it doesn't show the coefficients or other output information, but it gives a quick visual that's a little prettier than the base R plot:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ Boston, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ lstat, }\AttributeTok{y =}\NormalTok{ medv)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{formula =}\NormalTok{ y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x) }\SpecialCharTok{+}
+  \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \FunctionTok{mean}\NormalTok{(Boston}\SpecialCharTok{$}\NormalTok{medv), }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =} \FunctionTok{mean}\NormalTok{(Boston}\SpecialCharTok{$}\NormalTok{lstat), }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-5-1.pdf}
+
+The means of lstat and medv are shown with dashed red lines, showing that the regression line always goes through the center of the data.
 
 \hypertarget{multiple-linear-regression}{%
 \chapter{Multiple Linear Regression}\label{multiple-linear-regression}}

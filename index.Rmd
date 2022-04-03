@@ -27,6 +27,15 @@ The intent is twofold:
 1. Serve as a reference for the basics of the material covered in the class, using language and examples that are as simple as possible to explain the core concepts and how to do them;
 1. Force myself to learn these techniques better by carrying out the above.
 
+The main purpose of this work is to be *simple*, not to be *comprehensive*. We won't cover every facet of every technique, or every possible permutations of outcomes. The goal is to simply express the broad strokes and core concepts in a way that can be easily remembered, and to serve as a jumping-off point when more information is needed.
+
+## Authoring guidelines
+
+The goal is to have no more than a few short paragraphs for each section, and to keep each explanation of the meanings of outcome variables to one sentence each.
+
+## Resources
+
+A lot of the material from this work is from the class textbook, @ISLR. I also find UNC geneticist Josh Starmer's [StatQuest](https://www.youtube.com/channel/UCtYLUTtgS3k1Fg4y5tAhLbw) video series on YouTube to be immensely helpful for simple explanations of statistics and machine learning concepts. 
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages
