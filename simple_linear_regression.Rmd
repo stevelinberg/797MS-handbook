@@ -24,7 +24,7 @@ How to assess it
 
 Simple linear regression is where it all begins; among the simplest of all of the regression techniques in analysis, which attempts to estimate a slope and an intercept line for a set of observations using a single predictor variable $X$ and an output variable $Y$. It uses ordinary least squares (OLS) to build its model, looking for the line through the mean of $X$ and $Y$ that has the smallest sum of squares between the predicted and observed values.
 
-(ref:img-slr1) Simple linear regression plot (source: [ISLR2](https://www.statlearning.com/), p. 62)
+(ref:img-slr1) Simple linear regression plot (source: @ISLR, p. 62)
 
 ```{r img-slr1, echo=FALSE, fig.cap='(ref:img-slr1)', fig.show='hold'}
 knitr::include_graphics("images/3_1.png")

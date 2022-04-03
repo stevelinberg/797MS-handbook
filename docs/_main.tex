@@ -182,7 +182,7 @@ Simple linear regression is where it all begins; among the simplest of all of th
 
 
 \begin{figure}
-\includegraphics[width=16.03in]{images/3_1} \caption{Simple linear regression plot (source: \href{https://www.statlearning.com/}{ISLR2}, p.~62)}\label{fig:img-slr1}
+\includegraphics[width=16.03in]{images/3_1} \caption{Simple linear regression plot (source: \citet{ISLR}, p.~62)}\label{fig:img-slr1}
 \end{figure}
 
 The figure above shows a plot of a simple linear regression, attempting to use the variable \texttt{TV} to predict \texttt{Sales.} The blue line is the line defined by the regression with its \(Y\) intercept and slope; the red dots are the actual observations of \texttt{Sales} for each measure of the predictor \texttt{TV} on the \(X\) axis. The thin blue lines are the error in the prediction.
@@ -283,17 +283,17 @@ You can also do a scatterplot in ggplot2 and add a regression line with \texttt{
 \begin{Shaded}
 \begin{Highlighting}[]
 \FunctionTok{ggplot}\NormalTok{(}\AttributeTok{data =}\NormalTok{ Boston, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ lstat, }\AttributeTok{y =}\NormalTok{ medv)) }\SpecialCharTok{+}
-  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{, }\AttributeTok{formula =}\NormalTok{ y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x) }\SpecialCharTok{+}
   \FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \FunctionTok{mean}\NormalTok{(Boston}\SpecialCharTok{$}\NormalTok{medv), }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{color =} \StringTok{"red"}\NormalTok{) }\SpecialCharTok{+}
-  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =} \FunctionTok{mean}\NormalTok{(Boston}\SpecialCharTok{$}\NormalTok{lstat), }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{color =} \StringTok{"green"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_vline}\NormalTok{(}\AttributeTok{xintercept =} \FunctionTok{mean}\NormalTok{(Boston}\SpecialCharTok{$}\NormalTok{lstat), }\AttributeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }\AttributeTok{color =} \StringTok{"darkgreen"}\NormalTok{) }\SpecialCharTok{+}
   \FunctionTok{theme\_minimal}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{_main_files/figure-latex/unnamed-chunk-5-1.pdf}
 
-The means of lstat and medv are shown with dashed red and green lines, showing that the regression line always goes through the center of the data.
+The means of \texttt{lstat} and \texttt{medv} are shown with dashed red and green lines, showing that the regression line goes through the center of the data.
 
 \hypertarget{multiple-linear-regression}{%
 \chapter{Multiple Linear Regression}\label{multiple-linear-regression}}
