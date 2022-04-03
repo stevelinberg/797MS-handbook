@@ -1,0 +1,35 @@
+--- 
+title: "797ML Handbook"
+author: "Steve Linberg"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib, packages.bib]
+# url: your book url like https://bookdown.org/yihui/bookdown
+# cover-image: path to the social sharing image like images/cover.jpg
+description: |
+  This book is being written as part of a final project for 797ML at UMass
+  Amherst, spring 2022. It contains a simple reference and breakdown for a
+  couple of dozen core methods used in machine learning.
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+---
+
+# About
+
+This book is being written as part of a final project for 797ML at UMass
+Amherst, spring 2022. It contains a simple reference and breakdown for a
+couple of dozen core methods used in machine learning. 
+
+The intent is twofold:
+
+1. Serve as a reference for the basics of the material covered in the class, using language and examples that are as simple as possible to explain the core concepts and how to do them;
+1. Force myself to learn these techniques better by carrying out the above.
+
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```

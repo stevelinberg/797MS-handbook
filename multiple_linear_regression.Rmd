@@ -1,0 +1,32 @@
+# Multiple Linear Regression {#multiple-linear-regression} 
+
+## TL;DR
+
+What it does
+: Looks to see how well multiple predictor variables predict an outcome, like *how well do years of education and age predict salary?*
+
+When to do it
+: When a [simple linear regression](#simple-linear-regression) doesn't provide a good enough explanation of variance, and you want to see if adding additional variables provides a better one
+
+How to do it
+: With the `lm()` function, utilizing more than one predictor
+
+How to assess it
+: Look for significant $p$-values for the predictors, and a reasonable adjusted-$R^2$
+
+## What it does 
+
+Multiple linear regression is the first natural extension of simple linear regression. It allows for more than one predictor variable to be specified. It is also possible to combine predictors in interactions, to find out if combinations of predictors have different effects than simply adding them to the model. XXX explain/demo
+
+## When to do it
+
+Use multiple linear regression when a simple linear regression doesn't provide a good enough explanation of the variance you're observing, and you want to see if adding more predictors provides a better fit. Typically, this would be in response to either a low $R^2$ that leaves a lot of unexplained variance, or even just a visual conclusion drawn from seeing a plot of a linear model with an unsatisfactory regression line.
+
+## How to do it
+
+The `lm()` function, using more than one predictor in the formula.
+
+## How to interpret the output
+
+## Where to learn more
+

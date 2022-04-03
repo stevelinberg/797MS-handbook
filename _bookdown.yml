@@ -1,0 +1,30 @@
+delete_merged_file: true
+output_dir: "docs"
+language:
+  ui:
+    chapter_name: "Chapter "
+rmd_files: ["index.Rmd",
+"simple_linear_regression.Rmd",
+"multiple_linear_regression.Rmd",
+"logistic_regression.Rmd",
+"multiple_logistic_regression.Rmd",
+"linear_discriminant_analysis.Rmd",
+"quadratic_discriminant_analysis.Rmd",
+"naive_bayes.Rmd",
+"k_nearest_neighbors.Rmd",
+"poisson_regression.Rmd",
+"cross_validation.Rmd",
+"bootstrap.Rmd",
+"best_subset_selection.Rmd",
+"stepwise_selection.Rmd",
+"ridge_regression.Rmd",
+"lasso.Rmd",
+"principal_component_regression.Rmd",
+"bagging.Rmd",
+"random_forests.Rmd",
+"boosting.Rmd",
+"bayesian_additive_regression_trees.Rmd",
+"support_vector_machines.Rmd",
+"principal_component_analysis.Rmd",
+"k_means_clustering.Rmd",
+"hierarchical_clustering.Rmd"]

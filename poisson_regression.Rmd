@@ -1,0 +1,26 @@
+# Poisson Regression {#poisson-regression}
+
+## TL;DR
+
+What it does
+:
+
+When to do it
+:
+
+How to do it
+:
+
+How to assess it
+:
+
+## What it does
+
+## When to do it
+
+## How to do it
+
+## How to interpret the output
+
+## Where to learn more
+

@@ -1,0 +1,26 @@
+# Principal Component Analysis {#principal-component-analysis}
+
+## TL;DR
+
+What it does
+:
+
+When to do it
+:
+
+How to do it
+:
+
+How to assess it
+:
+
+## What it does
+
+## When to do it
+
+## How to do it
+
+## How to interpret the output
+
+## Where to learn more
+

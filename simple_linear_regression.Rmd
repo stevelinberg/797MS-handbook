@@ -1,0 +1,32 @@
+# Simple Linear Regression {#simple-linear-regression}
+
+## TL;DR
+
+What it does
+: Looks to see how well a single predictor variable predicts an outcome, like *how well do years of education predict salary?*
+
+When to do it
+: When you want to see if pretty much the simplest possible model provides enough of an explanation of variance for your purposes
+
+How to do it
+: With the `lm()` function, among other ways
+
+How to assess it
+: Look for a significant $p$-value for the predictor, and a reasonable $R^2$
+
+## What it does 
+
+Simple linear regression is where it all begins; among the simplest of all of the regression techniques in analysis, which attempts to estimate a slope and an intercept line for a set of observations using a single predictor variable $X$ and an output variable $Y$. It uses ordinary least squares (OLS) to build its model, looking for the line through the mean of $X$ and $Y$ that has the smallest sum of squares between the predicted and observed values.
+
+## When to do it
+
+It is a simple first step for looking at data to see if there is an easy single-variable model that does a reasonable job predicting outcomes using one predictor variable. Sometimes, it can be good enough! It has the advantage of being easy to execute, to understand and to communicate, and the value of these factors should not be underestimated. Communicating with non-specialists is an important aspect of a data scientist's job.
+
+Linear regression requires a dataset with a continuous outcome variable; it is easiest and most effective if the predictor variable is also numeric, whether continuous or discrete. It is possible to do linear regression with non-numeric predictors, such as true/false or ordered responses, by converting the predictors to a numeric scale.
+
+## How to do it
+
+## How to interpret the output
+
+## Where to learn more
+
