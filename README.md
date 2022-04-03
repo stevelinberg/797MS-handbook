@@ -1,13 +1,14 @@
-Welcome! 
+This is the project *797MS-handbook*, part of Steve Linberg's final project for Machine Learning for Social Sciences, spring 2022 at UMass Amherst. It is a handbook of the core methods and techniques presented through the class.
 
-This is a minimal example of a book based on R Markdown and **bookdown** (https://github.com/rstudio/bookdown). 
+It may be found online at:
 
-This template provides a skeleton file structure that you can edit to create your book. 
+https://stevelinberg.github.io/797MS-handbook/
 
-The contents inside the .Rmd files provide some pointers to help you get started, but feel free to also delete the content in each file and start fresh.
+The book's source code is at:
 
-Additional resources:
+https://github.com/stevelinberg/797MS-handbook
 
-The **bookdown** book: https://bookdown.org/yihui/bookdown/
+Contact me with any questions or comments; pulls welcome for corrections or additions.
 
-The **bookdown** package reference site: https://pkgs.rstudio.com/bookdown
+steve@slinberg.net
+
