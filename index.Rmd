@@ -6,6 +6,7 @@ site: bookdown::bookdown_site
 documentclass: book
 bibliography: [book.bib, packages.bib]
 # url: your book url like https://bookdown.org/yihui/bookdown
+url: "https://stevelinberg.github.io/797MS-handbook/"
 # cover-image: path to the social sharing image like images/cover.jpg
 description: |
   This book is being written as part of a final project for 797ML at UMass
