@@ -86,8 +86,8 @@ ggplot(data = Boston, aes(x = lstat, y = medv)) +
   geom_point() +
   geom_smooth(method = "lm", formula = y ~ x) +
   geom_hline(yintercept = mean(Boston$medv), linetype = "dashed", color = "red") +
-  geom_vline(xintercept = mean(Boston$lstat), linetype = "dashed", color = "red") +
+  geom_vline(xintercept = mean(Boston$lstat), linetype = "dashed", color = "green") +
   theme_minimal()
 ```
 
-The means of lstat and medv are shown with dashed red lines, showing that the regression line always goes through the center of the data.
+The means of lstat and medv are shown with dashed red and green lines, showing that the regression line always goes through the center of the data.
