@@ -12,7 +12,7 @@ description: |
   Amherst, spring 2022. It contains a simple reference and breakdown for a
   couple of dozen core methods used in machine learning.
 link-citations: yes
-github-repo: rstudio/bookdown-demo
+github-repo: stevelinberg/797MS-handbook
 ---
 
 # About
