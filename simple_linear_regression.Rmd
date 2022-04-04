@@ -59,6 +59,7 @@ summary(lm.fit)
 The output contains a lot of information, but the key points are:
 
 - `Adjusted R-squared`: 0.5432 is the percentage of the variation in the model that is explained by the fit's prediction, compared to just looking at how much the observations vary from their own average with no predictor variable.
+- `Residual standard error`: 6.216 is "the average amount that the response will deviate from the true regression line", or the standard deviation of the error. In this case, since the unit of `medv` is in thousands of dollars, it means the average prediction will be off by $6,216.
 - `p-value`: < 2.2e-16 (basically zero) means that the model is (very) statistically significant, with a near-zero percent chance that the data in this set could have resulted from a random draw from the (unknown) population if there were no relationship between `medv` and `lstat`
 - `Estimated intercept` of 34.55 is the $Y$ intercept on the graph, or the estimated value of `medv` when `lstat` is zero
 - `Estimated (lstat)`: -0.95 is the estimated coefficient of `lstat`, or the amount that `medv` changes by for each unit change in `lstat`.
