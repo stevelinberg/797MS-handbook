@@ -54,7 +54,7 @@ The results of the regression are stored in the output of `lm()`, and may be vie
 summary(lm.fit)
 ```
 
-## How to interpret the output
+## How to assess it
 
 The output contains a lot of information, but the key points are:
 

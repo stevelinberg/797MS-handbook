@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.9.23)  4 APR 2022 12:29
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.9.23)  4 APR 2022 16:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -833,12 +833,12 @@ Chapter 2.
 File: images/3_1.png Graphic file (type bmp)
 <images/3_1.png>
 
-Overfull \hbox (508.11914pt too wide) in paragraph at lines 201--201
+Overfull \hbox (508.11914pt too wide) in paragraph at lines 210--210
 [][] 
  []
 
 
-LaTeX Warning: Float too large for page by 24.51784pt on input line 202.
+LaTeX Warning: Float too large for page by 24.51784pt on input line 211.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -947,10 +947,10 @@ Chapter 25.
 
 ]) [63] (./_main.aux) ) 
 Here is how much of TeX's memory you used:
- 18649 strings out of 476919
- 328355 string characters out of 5821840
- 820402 words of memory out of 5000000
- 38353 multiletter control sequences out of 15000+600000
+ 18651 strings out of 476919
+ 328353 string characters out of 5821840
+ 820415 words of memory out of 5000000
+ 38355 multiletter control sequences out of 15000+600000
  409897 words of font info for 82 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  98i,6n,122p,510b,477s stack positions out of 5000i,500n,10000p,200000b,80000s
