@@ -43,7 +43,7 @@ and it will be possible to skim through the book, just surfing the TL;DR at the 
 
 ## Contact
 
-Steve Linberg: [steve@slinberg.net](mailto:steve@slinberg.net)
+Steve Linberg: [steve@slinberg.net](mailto:steve@slinberg.net) || https://slinberg.net
 
 Project home: https://stevelinberg.github.io/797MS-handbook/
 
