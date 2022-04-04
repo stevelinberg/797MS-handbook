@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.9.23)  3 APR 2022 19:37
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2021.9.23)  4 APR 2022 09:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -828,24 +828,24 @@ LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
 
 ]
 Chapter 1.
-[9] [10
-
-]
+[9] [10]
 Chapter 2.
 File: images/3_1.png Graphic file (type bmp)
 <images/3_1.png>
 
-Overfull \hbox (508.11914pt too wide) in paragraph at lines 185--185
+Overfull \hbox (508.11914pt too wide) in paragraph at lines 201--201
 [][] 
  []
 
 
-LaTeX Warning: Float too large for page by 24.51784pt on input line 186.
+LaTeX Warning: Float too large for page by 24.51784pt on input line 202.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[11] [12]
+[11
+
+] [12]
 File: _main_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use _main_files/figure-latex/unnamed-chunk-3-1.pdf>
 [13] [14]
@@ -949,7 +949,7 @@ Chapter 25.
 Here is how much of TeX's memory you used:
  18649 strings out of 476919
  328601 string characters out of 5821840
- 820643 words of memory out of 5000000
+ 820644 words of memory out of 5000000
  38353 multiletter control sequences out of 15000+600000
  409897 words of font info for 82 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
