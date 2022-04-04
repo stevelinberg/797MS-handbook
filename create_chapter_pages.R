@@ -57,7 +57,7 @@ TODO
 
 TODO
 
-## How to interpret the output
+## How to assess it
 
 TODO
 
