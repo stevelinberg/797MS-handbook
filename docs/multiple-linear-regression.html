@@ -164,7 +164,7 @@ div.csl-indent {
 <li><a href="./">797ML Handbook</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About<span></span></a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> cover-image: path to the social sharing image like images/cover.jpg<span></span></a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#authoring-guidelines"><i class="fa fa-check"></i><b>1.1</b> Authoring guidelines<span></span></a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#contact"><i class="fa fa-check"></i><b>1.2</b> Contact<span></span></a></li>
@@ -440,14 +440,57 @@ Look for significant <span class="math inline">\(p\)</span>-values for the predi
 </div>
 <div id="how-to-do-it-1" class="section level2 hasAnchor" number="3.4">
 <h2><span class="header-section-number">3.4</span> How to do it<a href="multiple-linear-regression.html#how-to-do-it-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The <code>lm()</code> function, using more than one predictor in the formula.</p>
+<p>Use the same <code>lm()</code> function, with more than one predictor in the formula.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="multiple-linear-regression.html#cb1-1" aria-hidden="true" tabindex="-1"></a>lm.fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(medv <span class="sc">~</span> lstat <span class="sc">+</span> age, <span class="at">data =</span> Boston)</span>
+<span id="cb1-2"><a href="multiple-linear-regression.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Boston<span class="sc">$</span>lstat, Boston<span class="sc">$</span>medv)</span>
+<span id="cb1-3"><a href="multiple-linear-regression.html#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(lm.fit, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>As with simplr linear regression, the results of the regression are stored in the output of <code>lm()</code>, and may be viewed with <code>summary()</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="multiple-linear-regression.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(lm.fit)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = medv ~ lstat + age, data = Boston)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -15.981  -3.978  -1.283   1.968  23.158 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 33.22276    0.73085  45.458  &lt; 2e-16 ***
+## lstat       -1.03207    0.04819 -21.416  &lt; 2e-16 ***
+## age          0.03454    0.01223   2.826  0.00491 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 6.173 on 503 degrees of freedom
+## Multiple R-squared:  0.5513, Adjusted R-squared:  0.5495 
+## F-statistic:   309 on 2 and 503 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>All of the same parameters are there, with the addition of one coefficient line for each parameter specified in the model. Each coefficient has its own estimate, standard error, <span class="math inline">\(t\)</span> value and <span class="math inline">\(p\)</span> value, and should be evaluated independently.</p>
+<p>The main task is to get the ideal subset of parameters that provide the best fit, which can involve a lot of trial and error. <em>Forward selection</em> involves starting with a null model (no parameters) and trying all available parameters to see which has the lowest p-value, and adding that and continuing until the parameters are no longer significant or don’t reduce the adjusted <span class="math inline">\(R^2\)</span>; <em>Backward selection</em> starts with all parameters and removes the least significant one at a time until all remaining parameters are significant; <em>Mixed selection</em> starts with forward selection but also removes parameters that lose their significance along the way.</p>
+<p>Other tidbits:</p>
+<ul>
+<li><em>interaction terms</em> can be specified with syntax like <code>lstat * age</code>, which adds <code>lstat</code>, <code>age</code> and <code>lstat * age</code> as predictors; if an interaction is significant but an individual predictor from the interaction isn’t, it should still be left in the model</li>
+<li><em>nonlinear transformations</em> like <span class="math inline">\(\text{age}^2\)</span> can be added by escaping them inside the <code>I()</code> function, like <code>I(age^2)</code>, to escape the <code>^</code> character inside the formula</li>
+</ul>
 </div>
 <div id="how-to-assess-it-1" class="section level2 hasAnchor" number="3.5">
 <h2><span class="header-section-number">3.5</span> How to assess it<a href="multiple-linear-regression.html#how-to-assess-it-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>With the exception of the additional information for each parameter, the assessment is the same as for <a href="simple-linear-regression.html#simple-linear-regression">simple linear regression</a>.</p>
+<p>In the example above, we see that the addition of <code>age</code> only added a tiny bit of improvement to the model from the simple linear regression on just <code>lstat</code>. Other variables, or combinations of variables, might do a better job.</p>
 </div>
 <div id="where-to-learn-more-1" class="section level2 hasAnchor" number="3.6">
 <h2><span class="header-section-number">3.6</span> Where to learn more<a href="multiple-linear-regression.html#where-to-learn-more-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>Chapter 3.2 in <span class="citation">James et al. (<a href="#ref-ISLR" role="doc-biblioref">2021</a>)</span></li>
+</ul>
 
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-ISLR" class="csl-entry">
+James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2021. <em>An Introduction to Statistical Learning</em>. 2nd ed. Springer. <a href="https://link.springer.com/book/10.1007/978-1-0716-1418-1">https://link.springer.com/book/10.1007/978-1-0716-1418-1</a>.
 </div>
 </div>
             </section>

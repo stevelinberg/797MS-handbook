@@ -1,5 +1,11 @@
 # Multiple Linear Regression {#multiple-linear-regression} 
 
+```{r include=FALSE}
+library(tidyverse)
+library(MASS)
+library(ISLR2)
+```
+
 ## TL;DR
 
 What it does
@@ -24,9 +30,35 @@ Use multiple linear regression when a simple linear regression doesn't provide a
 
 ## How to do it
 
-The `lm()` function, using more than one predictor in the formula.
+Use the same `lm()` function, with more than one predictor in the formula.
+
+```{r message=FALSE, warning=FALSE}
+lm.fit <- lm(medv ~ lstat + age, data = Boston)
+plot(Boston$lstat, Boston$medv)
+abline(lm.fit, lwd = 3, col = "red")
+```
+
+As with simplr linear regression, the results of the regression are stored in the output of `lm()`, and may be viewed with `summary()`:
+
+```{r}
+summary(lm.fit)
+```
+
+All of the same parameters are there, with the addition of one coefficient line for each parameter specified in the model. Each coefficient has its own estimate, standard error, $t$ value and $p$ value, and should be evaluated independently.
+
+The main task is to get the ideal subset of parameters that provide the best fit, which can involve a lot of trial and error. *Forward selection* involves starting with a null model (no parameters) and trying all available parameters to see which has the lowest p-value, and adding that and continuing until the parameters are no longer significant or don't reduce the adjusted $R^2$; *Backward selection* starts with all parameters and removes the least significant one at a time until all remaining parameters are significant; *Mixed selection* starts with forward selection but also removes parameters that lose their significance along the way.
+
+Other tidbits:
+
+- *interaction terms* can be specified with syntax like `lstat * age`, which adds `lstat`, `age` and `lstat * age` as predictors; if an interaction is significant but an individual predictor from the interaction isn't, it should still be left in the model
+- *nonlinear transformations* like $\text{age}^2$ can be added by escaping them inside the `I()` function, like `I(age^2)`, to escape the `^` character inside the formula
 
 ## How to assess it
 
+With the exception of the additional information for each parameter, the assessment is the same as for [simple linear regression](#simple-linear-regression).
+
+In the example above, we see that the addition of `age` only added a tiny bit of improvement to the model from the simple linear regression on just `lstat`. Other variables, or combinations of variables, might do a better job.
+
 ## Where to learn more
 
+- Chapter 3.2 in @ISLR
