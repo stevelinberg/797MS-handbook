@@ -197,6 +197,8 @@ When you want to see if pretty much the simplest possible model provides enough 
 With the \texttt{lm()} function, among other ways
 \item[How to assess it]
 Look for a significant \(p\)-value for the predictor, and a reasonable \(R^2\)
+\item[Note]
+``Linear'' does not necessarily mean ``straight'' in this context; a linear regression line can curve.
 \end{description}
 
 \hypertarget{what-it-does}{%
@@ -273,19 +275,21 @@ The output contains a lot of information, but the key points are:
 \item
   \texttt{Adjusted\ R-squared}: 0.5432 is the percentage of the variation in the model that is explained by the fit's prediction, compared to just looking at how much the observations vary from their own average with no predictor variable.
 \item
-  \texttt{p-value}: \textless{} 2.2e-16 (basically zero) means that the model is (very) statistically significant, with a near-zero percent chance that the data in this set could have resulted from a random draw from the (unknown) population if there were no relationship between \texttt{medv} and \texttt{lstat}
+  \texttt{Residual\ standard\ error}: 6.216 is ``the average amount that the response will deviate from the true regression line'', or the standard deviation of the error. In this case, since the unit of \texttt{medv} is in thousands of dollars, it means the average prediction will be off by \$6,216.
 \item
-  \texttt{Estimated\ intercept} of 34.55 is the \(Y\) intercept on the graph, or the estimated value of \texttt{medv} when \texttt{lstat} is zero
+  \texttt{p-value}: \textless{} 2.2e-16 (basically zero) means that the model is (very) statistically significant, with a near-zero percent chance that the data in this set could have resulted from a random draw from the (unknown) population if there were no relationship between \texttt{medv} and \texttt{lstat}.
+\item
+  \texttt{Estimated\ intercept} of 34.55 is the \(Y\) intercept on the graph, or the estimated value of \texttt{medv} when \texttt{lstat} is zero.
 \item
   \texttt{Estimated\ (lstat)}: -0.95 is the estimated coefficient of \texttt{lstat}, or the amount that \texttt{medv} changes by for each unit change in \texttt{lstat}.
 \end{itemize}
 
 The intercept and coefficient are \(\beta_0\) and \(\beta_1\), respectively, of the linear regression formula
 
-\[Y = \beta_0 + \beta_1X\]
+\[\hat{y} = \hat{\beta_0} + \hat{\beta_1}x\]
 Substituting the coefficients and variables, we transform this to:
 
-\[\text{medv} = 34.55 - 0.95 \times \text{lstat}\]
+\[\widehat{\text{medv}} = 34.55 - 0.95 \times \text{lstat}\]
 
 The low p-value shows that there is (almost) definitely a relationship between \texttt{medv} and \texttt{lstat}, but the \(R^2\) of 0.54 shows that the model only explains slightly more than half of the variation in the data. It's not a bad start, but we would probably want to find a model that explains more of it.
 
@@ -351,13 +355,77 @@ Use multiple linear regression when a simple linear regression doesn't provide a
 \hypertarget{how-to-do-it-1}{%
 \section{How to do it}\label{how-to-do-it-1}}
 
-The \texttt{lm()} function, using more than one predictor in the formula.
+Use the same \texttt{lm()} function, with more than one predictor in the formula.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{lm.fit }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(medv }\SpecialCharTok{\textasciitilde{}}\NormalTok{ lstat }\SpecialCharTok{+}\NormalTok{ age, }\AttributeTok{data =}\NormalTok{ Boston)}
+\FunctionTok{plot}\NormalTok{(Boston}\SpecialCharTok{$}\NormalTok{lstat, Boston}\SpecialCharTok{$}\NormalTok{medv)}
+\FunctionTok{abline}\NormalTok{(lm.fit, }\AttributeTok{lwd =} \DecValTok{3}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+As with simplr linear regression, the results of the regression are stored in the output of \texttt{lm()}, and may be viewed with \texttt{summary()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(lm.fit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = medv ~ lstat + age, data = Boston)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -15.981  -3.978  -1.283   1.968  23.158 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 33.22276    0.73085  45.458  < 2e-16 ***
+## lstat       -1.03207    0.04819 -21.416  < 2e-16 ***
+## age          0.03454    0.01223   2.826  0.00491 ** 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 6.173 on 503 degrees of freedom
+## Multiple R-squared:  0.5513, Adjusted R-squared:  0.5495 
+## F-statistic:   309 on 2 and 503 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+All of the same parameters are there, with the addition of one coefficient line for each parameter specified in the model. Each coefficient has its own estimate, standard error, \(t\) value and \(p\) value, and should be evaluated independently.
+
+The main task is to get the ideal subset of parameters that provide the best fit, which can involve a lot of trial and error. \emph{Forward selection} involves starting with a null model (no parameters) and trying all available parameters to see which has the lowest p-value, and adding that and continuing until the parameters are no longer significant or don't reduce the adjusted \(R^2\); \emph{Backward selection} starts with all parameters and removes the least significant one at a time until all remaining parameters are significant; \emph{Mixed selection} starts with forward selection but also removes parameters that lose their significance along the way.
+
+Other tidbits:
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{interaction terms} can be specified with syntax like \texttt{lstat\ *\ age}, which adds \texttt{lstat}, \texttt{age} and \texttt{lstat\ *\ age} as predictors; if an interaction is significant but an individual predictor from the interaction isn't, it should still be left in the model
+\item
+  \emph{nonlinear transformations} like \(\text{age}^2\) can be added by escaping them inside the \texttt{I()} function, like \texttt{I(age\^{}2)}, to escape the \texttt{\^{}} character inside the formula
+\end{itemize}
 
 \hypertarget{how-to-assess-it-1}{%
 \section{How to assess it}\label{how-to-assess-it-1}}
 
+With the exception of the additional information for each parameter, the assessment is the same as for \protect\hyperlink{simple-linear-regression}{simple linear regression}.
+
+In the example above, we see that the addition of \texttt{age} only added a tiny bit of improvement to the model from the simple linear regression on just \texttt{lstat}. Other variables, or combinations of variables, might do a better job.
+
 \hypertarget{where-to-learn-more-1}{%
 \section{Where to learn more}\label{where-to-learn-more-1}}
+
+\begin{itemize}
+\tightlist
+\item
+  Chapter 3.2 in \citet{ISLR}
+\end{itemize}
 
 \hypertarget{logistic-regression}{%
 \chapter{Logistic Regression}\label{logistic-regression}}
