@@ -34,26 +34,36 @@ base_template <- "# TITLE {#REF}
 ## TL;DR
 
 What it does
-:
+: TODO
 
 When to do it
-:
+: TODO
 
 How to do it
-:
+: TODO
 
 How to assess it
-:
+: TODO
 
 ## What it does
 
+TODO
+
 ## When to do it
+
+TODO
 
 ## How to do it
 
+TODO
+
 ## How to interpret the output
 
+TODO
+
 ## Where to learn more
+
+TODO
 "
 
 for (chap in chapters) {
