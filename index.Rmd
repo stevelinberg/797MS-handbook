@@ -41,6 +41,15 @@ Each chapter will have a [TL;DR](https://en.wikipedia.org/wiki/Wikipedia:Too_lon
 
 and it will be possible to skim through the book, just surfing the TL;DR at the top of each chapter, and get a reasonable overview without reading the rest. The rest of each chapter will deliver more fleshed-out, but *short*, answers to the same questions, covering the basics and the most general concepts.
 
+## Contact
+
+Steve Linberg: [steve@slinberg.net](mailto:steve@slinberg.net)
+
+Project home: https://stevelinberg.github.io/797MS-handbook/
+
+Github repo: https://github.com/stevelinberg/797MS-handbook
+
+
 ## Resources
 
 A lot of the material from this work is from the class textbook, @ISLR. I also find UNC geneticist Josh Starmer's [StatQuest](https://www.youtube.com/channel/UCtYLUTtgS3k1Fg4y5tAhLbw) video series on YouTube to be immensely helpful for simple explanations of statistics and machine learning concepts. 
