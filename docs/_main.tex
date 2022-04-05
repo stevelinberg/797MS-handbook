@@ -436,42 +436,149 @@ In the example above, we see that the addition of \texttt{age} only added a tiny
 \begin{description}
 \tightlist
 \item[What it does]
-TODO
+Models the \emph{probability} that an observation falls into one of two categories
 \item[When to do it]
-TODO
+When you are trying to predict a categorical variable with two possible outcomes, like true/false, instead of something continuous
 \item[How to do it]
-TODO
+With the \texttt{glm()} function, specifying \texttt{family\ =\ "binomial"}
 \item[How to assess it]
-TODO
+Look for a significant \(p\)-value for the predictor, and assess its accuracy against training data
 \end{description}
 
 \hypertarget{what-it-does-2}{%
 \section{What it does}\label{what-it-does-2}}
 
-TODO
+Logistic regression is used to make a prediction about whether an observation falls into one of two categories. This is an alternative to linear regression, which predicts a continuous outcome. A logistic regression results in a model that gives the probability of Y given X.
 
 \hypertarget{when-to-do-it-2}{%
 \section{When to do it}\label{when-to-do-it-2}}
 
-TODO
+As the TL;DR says: When you are trying to predict a categorical variable with two possible outcomes, like true/false, instead of something continuous.
 
 \hypertarget{how-to-do-it-2}{%
 \section{How to do it}\label{how-to-do-it-2}}
 
-TODO
+First, it's important to note that logistic regression will give better results when the model is fit using \emph{held out} or \emph{training} data, and then tested against other data, to help avoid overfitting. It is not required, but it's recommended where possible.
+
+First, before that, fit a model using glm, making sure in this case that we have a categorical value to test for:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(Boston)}
+\NormalTok{boston }\OtherTok{\textless{}{-}}\NormalTok{ Boston }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# Create the crim\_above\_median response variable}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{crim\_above\_med =} \FunctionTok{as.factor}\NormalTok{(}
+    \FunctionTok{ifelse}\NormalTok{(crim }\SpecialCharTok{\textgreater{}} \FunctionTok{median}\NormalTok{(crim), }\StringTok{"Yes"}\NormalTok{, }\StringTok{"No"}\NormalTok{)))}
+\NormalTok{boston.fits }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(crim\_above\_med }\SpecialCharTok{\textasciitilde{}}\NormalTok{ nox, }\AttributeTok{data =}\NormalTok{ boston, }\AttributeTok{family =}\NormalTok{ binomial)}
+\FunctionTok{summary}\NormalTok{(boston.fits)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## glm(formula = crim_above_med ~ nox, family = binomial, data = boston)
+## 
+## Deviance Residuals: 
+##      Min        1Q    Median        3Q       Max  
+## -2.27324  -0.37245  -0.06847   0.39620   2.53124  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(>|z|)    
+## (Intercept)  -15.818      1.386  -11.41   <2e-16 ***
+## nox           29.365      2.599   11.30   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 701.46  on 505  degrees of freedom
+## Residual deviance: 320.39  on 504  degrees of freedom
+## AIC: 324.39
+## 
+## Number of Fisher Scoring iterations: 6
+\end{verbatim}
+
+We can see the that \(p\) value for the \texttt{nox} variable is nearly 0, suggesting a strong association between \texttt{nox} and \texttt{crim\_above\_med}.
+
+Now split the data into training and test sets, using, say, 80\% of the data for training:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1235}\NormalTok{)}
+\NormalTok{boston.training }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{FALSE}\NormalTok{, }\FunctionTok{nrow}\NormalTok{(boston))}
+\NormalTok{boston.training[}\FunctionTok{sample}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(boston), }\FunctionTok{nrow}\NormalTok{(boston) }\SpecialCharTok{*} \FloatTok{0.8}\NormalTok{)] }\OtherTok{\textless{}{-}} \ConstantTok{TRUE}
+\NormalTok{boston.test }\OtherTok{\textless{}{-}} \SpecialCharTok{!}\NormalTok{boston.training}
+\end{Highlighting}
+\end{Shaded}
+
+Fit the above model to the training data:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{boston.fits }\OtherTok{\textless{}{-}}
+  \FunctionTok{glm}\NormalTok{(}
+\NormalTok{    crim\_above\_med }\SpecialCharTok{\textasciitilde{}}\NormalTok{ nox,}
+    \AttributeTok{data =}\NormalTok{ boston,}
+    \AttributeTok{subset =}\NormalTok{ boston.training,}
+    \AttributeTok{family =}\NormalTok{ binomial}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+And use the fit to predict the test data with \texttt{predict()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{boston.probs }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(boston.fits, boston[boston.test,], }\AttributeTok{type =} \StringTok{"response"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{how-to-assess-it-2}{%
 \section{How to assess it}\label{how-to-assess-it-2}}
 
-TODO
+Assess the accuracy of the predictions by building a confusion matrix, using the same values (``No'' and ``Yes'' in this case) as contained in the outcome variable we want to predict:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{boston.pred }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\StringTok{"No"}\NormalTok{, }\FunctionTok{sum}\NormalTok{(boston.test))}
+\NormalTok{boston.pred[boston.probs }\SpecialCharTok{\textgreater{}} \FloatTok{0.5}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"Yes"}
+\FunctionTok{table}\NormalTok{(boston.pred, boston[boston.test,]}\SpecialCharTok{$}\NormalTok{crim\_above\_med)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            
+## boston.pred No Yes
+##         No  36  12
+##         Yes  5  49
+\end{verbatim}
+
+The above table shows that the model correctly predicted \texttt{crim\_above\_med} from \texttt{nox} 85 times out of 102, with 5 false positives and 12 false negatives. The accuracy of the model can be computed via the \texttt{mean()} of how often the predictions match the test data, a neat trick:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(boston.pred }\SpecialCharTok{==}\NormalTok{ boston[boston.test,]}\SpecialCharTok{$}\NormalTok{crim\_above\_med)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.8333333
+\end{verbatim}
 
 \hypertarget{where-to-learn-more-2}{%
 \section{Where to learn more}\label{where-to-learn-more-2}}
 
-TODO
+\begin{itemize}
+\tightlist
+\item
+  Chapter 4 - 4.3 in \citet{ISLR}
+\item
+  \href{https://www.youtube.com/watch?v=yIYKR4sgzI8}{StatQuest: Logistic Regression}
+\end{itemize}
 
 \hypertarget{multiple-logistic-regression}{%
-\chapter{Multiple Logistic Regression}\label{multiple-logistic-regression}}
+\chapter{TODO: Multiple Logistic Regression}\label{multiple-logistic-regression}}
 
 \hypertarget{tldr-3}{%
 \section{TL;DR}\label{tldr-3}}
@@ -514,7 +621,7 @@ TODO
 TODO
 
 \hypertarget{linear-discriminant-analysis}{%
-\chapter{Linear Discriminant Analysis}\label{linear-discriminant-analysis}}
+\chapter{TODO: Linear Discriminant Analysis}\label{linear-discriminant-analysis}}
 
 \hypertarget{tldr-4}{%
 \section{TL;DR}\label{tldr-4}}
@@ -557,7 +664,7 @@ TODO
 TODO
 
 \hypertarget{quadratic-discriminant-analysis}{%
-\chapter{Quadratic Discriminant Analysis}\label{quadratic-discriminant-analysis}}
+\chapter{TODO: Quadratic Discriminant Analysis}\label{quadratic-discriminant-analysis}}
 
 \hypertarget{tldr-5}{%
 \section{TL;DR}\label{tldr-5}}
@@ -600,7 +707,7 @@ TODO
 TODO
 
 \hypertarget{naive-bayes}{%
-\chapter{Naive Bayes}\label{naive-bayes}}
+\chapter{TODO: Naive Bayes}\label{naive-bayes}}
 
 \hypertarget{tldr-6}{%
 \section{TL;DR}\label{tldr-6}}
@@ -643,7 +750,7 @@ TODO
 TODO
 
 \hypertarget{k-nearest-neighbors}{%
-\chapter{K-Nearest Neighbors}\label{k-nearest-neighbors}}
+\chapter{TODO: K-Nearest Neighbors}\label{k-nearest-neighbors}}
 
 \hypertarget{tldr-7}{%
 \section{TL;DR}\label{tldr-7}}
@@ -686,7 +793,7 @@ TODO
 TODO
 
 \hypertarget{poisson-regression}{%
-\chapter{Poisson Regression}\label{poisson-regression}}
+\chapter{TODO: Poisson Regression}\label{poisson-regression}}
 
 \hypertarget{tldr-8}{%
 \section{TL;DR}\label{tldr-8}}
@@ -729,7 +836,7 @@ TODO
 TODO
 
 \hypertarget{cross-validation}{%
-\chapter{Cross-Validation}\label{cross-validation}}
+\chapter{TODO: Cross-Validation}\label{cross-validation}}
 
 \hypertarget{tldr-9}{%
 \section{TL;DR}\label{tldr-9}}
@@ -772,7 +879,7 @@ TODO
 TODO
 
 \hypertarget{bootstrap}{%
-\chapter{Bootstrap}\label{bootstrap}}
+\chapter{TODO: Bootstrap}\label{bootstrap}}
 
 \hypertarget{tldr-10}{%
 \section{TL;DR}\label{tldr-10}}
@@ -815,7 +922,7 @@ TODO
 TODO
 
 \hypertarget{best-subset-selection}{%
-\chapter{Best Subset Selection}\label{best-subset-selection}}
+\chapter{TODO: Best Subset Selection}\label{best-subset-selection}}
 
 \hypertarget{tldr-11}{%
 \section{TL;DR}\label{tldr-11}}
@@ -858,7 +965,7 @@ TODO
 TODO
 
 \hypertarget{stepwise-selection}{%
-\chapter{Stepwise Selection}\label{stepwise-selection}}
+\chapter{TODO: Stepwise Selection}\label{stepwise-selection}}
 
 \hypertarget{tldr-12}{%
 \section{TL;DR}\label{tldr-12}}
@@ -901,7 +1008,7 @@ TODO
 TODO
 
 \hypertarget{ridge-regression}{%
-\chapter{Ridge Regression}\label{ridge-regression}}
+\chapter{TODO: Ridge Regression}\label{ridge-regression}}
 
 \hypertarget{tldr-13}{%
 \section{TL;DR}\label{tldr-13}}
@@ -944,7 +1051,7 @@ TODO
 TODO
 
 \hypertarget{lasso}{%
-\chapter{Lasso}\label{lasso}}
+\chapter{TODO: Lasso}\label{lasso}}
 
 \hypertarget{tldr-14}{%
 \section{TL;DR}\label{tldr-14}}
@@ -987,7 +1094,7 @@ TODO
 TODO
 
 \hypertarget{principal-component-regression}{%
-\chapter{Principal Component Regression}\label{principal-component-regression}}
+\chapter{TODO: Principal Component Regression}\label{principal-component-regression}}
 
 \hypertarget{tldr-15}{%
 \section{TL;DR}\label{tldr-15}}
@@ -1030,7 +1137,7 @@ TODO
 TODO
 
 \hypertarget{bagging}{%
-\chapter{Bagging}\label{bagging}}
+\chapter{TODO: Bagging}\label{bagging}}
 
 \hypertarget{tldr-16}{%
 \section{TL;DR}\label{tldr-16}}
@@ -1073,7 +1180,7 @@ TODO
 TODO
 
 \hypertarget{random-forests}{%
-\chapter{Random Forests}\label{random-forests}}
+\chapter{TODO: Random Forests}\label{random-forests}}
 
 \hypertarget{tldr-17}{%
 \section{TL;DR}\label{tldr-17}}
@@ -1116,7 +1223,7 @@ TODO
 TODO
 
 \hypertarget{boosting}{%
-\chapter{Boosting}\label{boosting}}
+\chapter{TODO: Boosting}\label{boosting}}
 
 \hypertarget{tldr-18}{%
 \section{TL;DR}\label{tldr-18}}
@@ -1159,7 +1266,7 @@ TODO
 TODO
 
 \hypertarget{bayesian-additive-regression-trees}{%
-\chapter{Bayesian Additive Regression Trees}\label{bayesian-additive-regression-trees}}
+\chapter{TODO: Bayesian Additive Regression Trees}\label{bayesian-additive-regression-trees}}
 
 \hypertarget{tldr-19}{%
 \section{TL;DR}\label{tldr-19}}
@@ -1202,7 +1309,7 @@ TODO
 TODO
 
 \hypertarget{support-vector-machines}{%
-\chapter{Support Vector Machines}\label{support-vector-machines}}
+\chapter{TODO: Support Vector Machines}\label{support-vector-machines}}
 
 \hypertarget{tldr-20}{%
 \section{TL;DR}\label{tldr-20}}
@@ -1245,7 +1352,7 @@ TODO
 TODO
 
 \hypertarget{principal-component-analysis}{%
-\chapter{Principal Component Analysis}\label{principal-component-analysis}}
+\chapter{TODO: Principal Component Analysis}\label{principal-component-analysis}}
 
 \hypertarget{tldr-21}{%
 \section{TL;DR}\label{tldr-21}}
@@ -1288,7 +1395,7 @@ TODO
 TODO
 
 \hypertarget{k-means-clustering}{%
-\chapter{K-Means Clustering}\label{k-means-clustering}}
+\chapter{TODO: K-Means Clustering}\label{k-means-clustering}}
 
 \hypertarget{tldr-22}{%
 \section{TL;DR}\label{tldr-22}}
@@ -1331,7 +1438,7 @@ TODO
 TODO
 
 \hypertarget{hierarchical-clustering}{%
-\chapter{Hierarchical Clustering}\label{hierarchical-clustering}}
+\chapter{TODO: Hierarchical Clustering}\label{hierarchical-clustering}}
 
 \hypertarget{tldr-23}{%
 \section{TL;DR}\label{tldr-23}}

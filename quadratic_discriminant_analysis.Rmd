@@ -1,4 +1,4 @@
-# Quadratic Discriminant Analysis {#quadratic-discriminant-analysis}
+# TODO: Quadratic Discriminant Analysis {#quadratic-discriminant-analysis}
 
 ## TL;DR
 

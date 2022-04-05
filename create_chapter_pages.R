@@ -29,7 +29,7 @@ chapters <- c(
   "Hierarchical clustering"
 )
 
-base_template <- "# TITLE {#REF}
+base_template <- "# TODO: TITLE {#REF}
 
 ## TL;DR
 

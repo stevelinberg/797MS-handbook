@@ -1,4 +1,4 @@
-# Linear Discriminant Analysis {#linear-discriminant-analysis}
+# TODO: Linear Discriminant Analysis {#linear-discriminant-analysis}
 
 ## TL;DR
 

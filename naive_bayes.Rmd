@@ -1,4 +1,4 @@
-# Naive Bayes {#naive-bayes}
+# TODO: Naive Bayes {#naive-bayes}
 
 ## TL;DR
 
