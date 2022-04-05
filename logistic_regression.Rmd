@@ -1,36 +1,95 @@
 # Logistic Regression {#logistic-regression}
 
+```{r include=FALSE}
+library(tidyverse)
+library(ISLR2)
+```
+
 ## TL;DR
 
 What it does
-: TODO
+: Models the *probability* that an observation falls into one of two categories
 
 When to do it
-: TODO
+: When you are trying to predict a categorical variable with two possible outcomes, like true/false, instead of something continuous
 
 How to do it
-: TODO
+: With the `glm()` function, specifying `family = "binomial"`
 
 How to assess it
-: TODO
+: Look for a significant $p$-value for the predictor, and assess its accuracy against training data
 
 ## What it does
 
-TODO
+Logistic regression is used to make a prediction about whether an observation falls into one of two categories. This is an alternative to linear regression, which predicts a continuous outcome. A logistic regression results in a model that gives the probability of Y given X. 
 
 ## When to do it
 
-TODO
+As the TL;DR says: When you are trying to predict a categorical variable with two possible outcomes, like true/false, instead of something continuous.
 
 ## How to do it
 
-TODO
+First, it's important to note that logistic regression will give better results when the model is fit using *held out* or *training* data, and then tested against other data, to help avoid overfitting. It is not required, but it's recommended where possible.
+
+First, before that, fit a model using glm, making sure in this case that we have a categorical value to test for:
+
+```{r}
+data(Boston)
+boston <- Boston %>%
+  # Create the crim_above_median response variable
+  mutate(crim_above_med = as.factor(
+    ifelse(crim > median(crim), "Yes", "No")))
+boston.fits <- glm(crim_above_med ~ nox, data = boston, family = binomial)
+summary(boston.fits)
+```
+
+We can see the that $p$ value for the `nox` variable is nearly 0, suggesting a strong association between `nox` and `crim_above_med`.
+
+Now split the data into training and test sets, using, say, 80% of the data for training:
+
+```{r}
+set.seed(1235)
+boston.training <- rep(FALSE, nrow(boston))
+boston.training[sample(nrow(boston), nrow(boston) * 0.8)] <- TRUE
+boston.test <- !boston.training
+```
+
+Fit the above model to the training data:
+
+```{r}
+boston.fits <-
+  glm(
+    crim_above_med ~ nox,
+    data = boston,
+    subset = boston.training,
+    family = binomial
+  )
+```
+
+And use the fit to predict the test data with `predict()`:
+
+```{r}
+boston.probs <- predict(boston.fits, boston[boston.test,], type = "response")
+```
 
 ## How to assess it
 
-TODO
+Assess the accuracy of the predictions by building a confusion matrix, using the same values ("No" and "Yes" in this case) as contained in the outcome variable we want to predict:
+
+```{r}
+boston.pred <- rep("No", sum(boston.test))
+boston.pred[boston.probs > 0.5] <- "Yes"
+table(boston.pred, boston[boston.test,]$crim_above_med)
+```
+
+The above table shows that the model correctly predicted `crim_above_med` from `nox` 85 times out of 102, with 5 false positives and 12 false negatives. The accuracy of the model can be computed via the `mean()` of how often the predictions match the test data, a neat trick:
+
+```{r}
+mean(boston.pred == boston[boston.test,]$crim_above_med)
+```
 
 ## Where to learn more
 
-TODO
+- Chapter 4 - 4.3 in @ISLR
+- [StatQuest: Logistic Regression](https://www.youtube.com/watch?v=yIYKR4sgzI8)
 
