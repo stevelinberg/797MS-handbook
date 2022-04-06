@@ -23,8 +23,11 @@ How to assess it
 
 Logistic regression is used to make a prediction about whether an observation falls into one of two categories. This is an alternative to linear regression, which predicts a continuous outcome. A logistic regression results in a model that gives the probability of Y given X. 
 
-XXX need an image here of the s-curve and some observations, steal from the book
+(ref:img-lr1) Linear regression plot (source: [StatQuest](https://youtu.be/yIYKR4sgzI8?t=222))
 
+```{r img-slr1, echo=FALSE, fig.cap='(ref:img-lr1)', fig.show='hold', out.width="50%"}
+knitr::include_graphics("images/4_1.png")
+```
 ## When to do it
 
 As the TL;DR says: When you are trying to predict a categorical variable with two possible outcomes, like true/false, instead of something continuous.
@@ -38,9 +41,12 @@ First, before that, fit a model using glm, making sure in this case that we have
 ```{r}
 data(Boston)
 boston <- Boston %>%
-  # Create the crim_above_median response variable
-  mutate(crim_above_med = as.factor(
-    ifelse(crim > median(crim), "Yes", "No")))
+  mutate(
+    # Create the categorical crim_above_med response variable
+    crim_above_med = as.factor(ifelse(crim > median(crim), "Yes", "No")),
+    # Also make a numeric version of crim_above_med for the plot
+    crim_above_med_num = ifelse(crim > median(crim), 1, 0)
+  )
 boston.fits <- glm(crim_above_med ~ nox, data = boston, family = binomial)
 summary(boston.fits)
 ```
@@ -89,6 +95,23 @@ The above table shows that the model correctly predicted `crim_above_med` from `
 ```{r}
 mean(boston.pred == boston[boston.test,]$crim_above_med)
 ```
+
+The regression can be plotted with `ggplot2` and the `stat_smooth()` function, utilizing the `glm` method, like so:
+
+```{r}
+ggplot(boston, aes(x = nox, y = crim_above_med_num)) +
+  geom_point(alpha = .5) +
+  stat_smooth(
+    method = "glm",
+    formula = y ~ x,
+    se = FALSE,
+    method.args = list(family = binomial),
+    col = "red",
+    lty = 2
+  )
+```
+
+This shows that an observation with a `nox` value of 0.6 would have around a 90% probability of `crim_above_med` being true, or 1, while an observation with a `nox` value of 0.5 would only have around a 25% probability of `crim_above_med` being true.
 
 ## Where to learn more
 
