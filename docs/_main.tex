@@ -452,7 +452,11 @@ Look for a significant \(p\)-value for the predictor, and assess its accuracy ag
 
 Logistic regression is used to make a prediction about whether an observation falls into one of two categories. This is an alternative to linear regression, which predicts a continuous outcome. A logistic regression results in a model that gives the probability of Y given X.
 
-XXX need an image here of the s-curve and some observations, steal from the book
+
+
+\begin{figure}
+\includegraphics[width=0.5\linewidth]{images/4_1} \caption{Linear regression plot (source: \href{https://youtu.be/yIYKR4sgzI8?t=222}{StatQuest})}\label{fig:img-lr1}
+\end{figure}
 
 \hypertarget{when-to-do-it-2}{%
 \section{When to do it}\label{when-to-do-it-2}}
@@ -470,9 +474,12 @@ First, before that, fit a model using glm, making sure in this case that we have
 \begin{Highlighting}[]
 \FunctionTok{data}\NormalTok{(Boston)}
 \NormalTok{boston }\OtherTok{\textless{}{-}}\NormalTok{ Boston }\SpecialCharTok{\%\textgreater{}\%}
-  \CommentTok{\# Create the crim\_above\_median response variable}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{crim\_above\_med =} \FunctionTok{as.factor}\NormalTok{(}
-    \FunctionTok{ifelse}\NormalTok{(crim }\SpecialCharTok{\textgreater{}} \FunctionTok{median}\NormalTok{(crim), }\StringTok{"Yes"}\NormalTok{, }\StringTok{"No"}\NormalTok{)))}
+  \FunctionTok{mutate}\NormalTok{(}
+    \CommentTok{\# Create the categorical crim\_above\_med response variable}
+    \AttributeTok{crim\_above\_med =} \FunctionTok{as.factor}\NormalTok{(}\FunctionTok{ifelse}\NormalTok{(crim }\SpecialCharTok{\textgreater{}} \FunctionTok{median}\NormalTok{(crim), }\StringTok{"Yes"}\NormalTok{, }\StringTok{"No"}\NormalTok{)),}
+    \CommentTok{\# Also make a numeric version of crim\_above\_med for the plot}
+    \AttributeTok{crim\_above\_med\_num =} \FunctionTok{ifelse}\NormalTok{(crim }\SpecialCharTok{\textgreater{}} \FunctionTok{median}\NormalTok{(crim), }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+\NormalTok{  )}
 \NormalTok{boston.fits }\OtherTok{\textless{}{-}} \FunctionTok{glm}\NormalTok{(crim\_above\_med }\SpecialCharTok{\textasciitilde{}}\NormalTok{ nox, }\AttributeTok{data =}\NormalTok{ boston, }\AttributeTok{family =}\NormalTok{ binomial)}
 \FunctionTok{summary}\NormalTok{(boston.fits)}
 \end{Highlighting}
@@ -569,6 +576,27 @@ The above table shows that the model correctly predicted \texttt{crim\_above\_me
 \begin{verbatim}
 ## [1] 0.8333333
 \end{verbatim}
+
+The regression can be plotted with \texttt{ggplot2} and the \texttt{stat\_smooth()} function, utilizing the \texttt{glm} method, like so:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(boston, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ nox, }\AttributeTok{y =}\NormalTok{ crim\_above\_med\_num)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =}\NormalTok{ .}\DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{stat\_smooth}\NormalTok{(}
+    \AttributeTok{method =} \StringTok{"glm"}\NormalTok{,}
+    \AttributeTok{formula =}\NormalTok{ y }\SpecialCharTok{\textasciitilde{}}\NormalTok{ x,}
+    \AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{,}
+    \AttributeTok{method.args =} \FunctionTok{list}\NormalTok{(}\AttributeTok{family =}\NormalTok{ binomial),}
+    \AttributeTok{col =} \StringTok{"red"}\NormalTok{,}
+    \AttributeTok{lty =} \DecValTok{2}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-16-1.pdf}
+
+This shows that an observation with a \texttt{nox} value of 0.6 would have around a 90\% probability of \texttt{crim\_above\_med} being true, or 1, while an observation with a \texttt{nox} value of 0.5 would only have around a 25\% probability of \texttt{crim\_above\_med} being true.
 
 \hypertarget{where-to-learn-more-2}{%
 \section{Where to learn more}\label{where-to-learn-more-2}}

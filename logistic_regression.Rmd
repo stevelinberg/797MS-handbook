@@ -25,7 +25,7 @@ Logistic regression is used to make a prediction about whether an observation fa
 
 (ref:img-lr1) Linear regression plot (source: [StatQuest](https://youtu.be/yIYKR4sgzI8?t=222))
 
-```{r img-slr1, echo=FALSE, fig.cap='(ref:img-lr1)', fig.show='hold', out.width="50%"}
+```{r img-lr1, echo=FALSE, fig.cap='(ref:img-lr1)', fig.show='hold', out.width="50%"}
 knitr::include_graphics("images/4_1.png")
 ```
 ## When to do it

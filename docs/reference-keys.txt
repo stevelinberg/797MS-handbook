@@ -1,4 +1,5 @@
 fig:img-slr1
+fig:img-lr1
 about
 authoring-guidelines
 contact
@@ -172,4 +173,3 @@ when-to-do-it-23
 how-to-do-it-23
 how-to-assess-it-23
 where-to-learn-more-23
-cover-image-path-to-the-social-sharing-image-like-imagescover.jpg

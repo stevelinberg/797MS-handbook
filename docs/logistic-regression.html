@@ -164,7 +164,7 @@ div.csl-indent {
 <li><a href="./">797ML Handbook</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> cover-image: path to the social sharing image like images/cover.jpg<span></span></a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About<span></span></a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#authoring-guidelines"><i class="fa fa-check"></i><b>1.1</b> Authoring guidelines<span></span></a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#contact"><i class="fa fa-check"></i><b>1.2</b> Contact<span></span></a></li>
@@ -434,7 +434,7 @@ Look for a significant <span class="math inline">\(p\)</span>-value for the pred
 <h2><span class="header-section-number">4.2</span> What it does<a href="logistic-regression.html#what-it-does-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Logistic regression is used to make a prediction about whether an observation falls into one of two categories. This is an alternative to linear regression, which predicts a continuous outcome. A logistic regression results in a model that gives the probability of Y given X.</p>
 
-<div class="figure"><span style="display:block;" id="fig:img-slr1"></span>
+<div class="figure"><span style="display:block;" id="fig:img-lr1"></span>
 <img src="images/4_1.png" alt="Linear regression plot (source: StatQuest)" width="50%" />
 <p class="caption">
 Figure 4.1: Linear regression plot (source: <a href="https://youtu.be/yIYKR4sgzI8?t=222">StatQuest</a>)
@@ -449,16 +449,16 @@ Figure 4.1: Linear regression plot (source: <a href="https://youtu.be/yIYKR4sgzI
 <h2><span class="header-section-number">4.4</span> How to do it<a href="logistic-regression.html#how-to-do-it-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>First, it’s important to note that logistic regression will give better results when the model is fit using <em>held out</em> or <em>training</em> data, and then tested against other data, to help avoid overfitting. It is not required, but it’s recommended where possible.</p>
 <p>First, before that, fit a model using glm, making sure in this case that we have a categorical value to test for:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="logistic-regression.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Boston)</span>
-<span id="cb1-2"><a href="logistic-regression.html#cb1-2" aria-hidden="true" tabindex="-1"></a>boston <span class="ot">&lt;-</span> Boston <span class="sc">%&gt;%</span></span>
-<span id="cb1-3"><a href="logistic-regression.html#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb1-4"><a href="logistic-regression.html#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the categorical crim_above_med response variable</span></span>
-<span id="cb1-5"><a href="logistic-regression.html#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">crim_above_med =</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(crim <span class="sc">&gt;</span> <span class="fu">median</span>(crim), <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>)),</span>
-<span id="cb1-6"><a href="logistic-regression.html#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Also make a numeric version of crim_above_med for the plot</span></span>
-<span id="cb1-7"><a href="logistic-regression.html#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">crim_above_med_num =</span> <span class="fu">ifelse</span>(crim <span class="sc">&gt;</span> <span class="fu">median</span>(crim), <span class="dv">1</span>, <span class="dv">0</span>)</span>
-<span id="cb1-8"><a href="logistic-regression.html#cb1-8" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb1-9"><a href="logistic-regression.html#cb1-9" aria-hidden="true" tabindex="-1"></a>boston.fits <span class="ot">&lt;-</span> <span class="fu">glm</span>(crim_above_med <span class="sc">~</span> nox, <span class="at">data =</span> boston, <span class="at">family =</span> binomial)</span>
-<span id="cb1-10"><a href="logistic-regression.html#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(boston.fits)</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="logistic-regression.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Boston)</span>
+<span id="cb8-2"><a href="logistic-regression.html#cb8-2" aria-hidden="true" tabindex="-1"></a>boston <span class="ot">&lt;-</span> Boston <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="logistic-regression.html#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb8-4"><a href="logistic-regression.html#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the categorical crim_above_med response variable</span></span>
+<span id="cb8-5"><a href="logistic-regression.html#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">crim_above_med =</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(crim <span class="sc">&gt;</span> <span class="fu">median</span>(crim), <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>)),</span>
+<span id="cb8-6"><a href="logistic-regression.html#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Also make a numeric version of crim_above_med for the plot</span></span>
+<span id="cb8-7"><a href="logistic-regression.html#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">crim_above_med_num =</span> <span class="fu">ifelse</span>(crim <span class="sc">&gt;</span> <span class="fu">median</span>(crim), <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb8-8"><a href="logistic-regression.html#cb8-8" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb8-9"><a href="logistic-regression.html#cb8-9" aria-hidden="true" tabindex="-1"></a>boston.fits <span class="ot">&lt;-</span> <span class="fu">glm</span>(crim_above_med <span class="sc">~</span> nox, <span class="at">data =</span> boston, <span class="at">family =</span> binomial)</span>
+<span id="cb8-10"><a href="logistic-regression.html#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(boston.fits)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = crim_above_med ~ nox, family = binomial, data = boston)
@@ -483,46 +483,46 @@ Figure 4.1: Linear regression plot (source: <a href="https://youtu.be/yIYKR4sgzI
 ## Number of Fisher Scoring iterations: 6</code></pre>
 <p>We can see the that <span class="math inline">\(p\)</span> value for the <code>nox</code> variable is nearly 0, suggesting a strong association between <code>nox</code> and <code>crim_above_med</code>.</p>
 <p>Now split the data into training and test sets, using, say, 80% of the data for training:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="logistic-regression.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1235</span>)</span>
-<span id="cb3-2"><a href="logistic-regression.html#cb3-2" aria-hidden="true" tabindex="-1"></a>boston.training <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">FALSE</span>, <span class="fu">nrow</span>(boston))</span>
-<span id="cb3-3"><a href="logistic-regression.html#cb3-3" aria-hidden="true" tabindex="-1"></a>boston.training[<span class="fu">sample</span>(<span class="fu">nrow</span>(boston), <span class="fu">nrow</span>(boston) <span class="sc">*</span> <span class="fl">0.8</span>)] <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
-<span id="cb3-4"><a href="logistic-regression.html#cb3-4" aria-hidden="true" tabindex="-1"></a>boston.test <span class="ot">&lt;-</span> <span class="sc">!</span>boston.training</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="logistic-regression.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1235</span>)</span>
+<span id="cb10-2"><a href="logistic-regression.html#cb10-2" aria-hidden="true" tabindex="-1"></a>boston.training <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">FALSE</span>, <span class="fu">nrow</span>(boston))</span>
+<span id="cb10-3"><a href="logistic-regression.html#cb10-3" aria-hidden="true" tabindex="-1"></a>boston.training[<span class="fu">sample</span>(<span class="fu">nrow</span>(boston), <span class="fu">nrow</span>(boston) <span class="sc">*</span> <span class="fl">0.8</span>)] <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb10-4"><a href="logistic-regression.html#cb10-4" aria-hidden="true" tabindex="-1"></a>boston.test <span class="ot">&lt;-</span> <span class="sc">!</span>boston.training</span></code></pre></div>
 <p>Fit the above model to the training data:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="logistic-regression.html#cb4-1" aria-hidden="true" tabindex="-1"></a>boston.fits <span class="ot">&lt;-</span></span>
-<span id="cb4-2"><a href="logistic-regression.html#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(</span>
-<span id="cb4-3"><a href="logistic-regression.html#cb4-3" aria-hidden="true" tabindex="-1"></a>    crim_above_med <span class="sc">~</span> nox,</span>
-<span id="cb4-4"><a href="logistic-regression.html#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> boston,</span>
-<span id="cb4-5"><a href="logistic-regression.html#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset =</span> boston.training,</span>
-<span id="cb4-6"><a href="logistic-regression.html#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> binomial</span>
-<span id="cb4-7"><a href="logistic-regression.html#cb4-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="logistic-regression.html#cb11-1" aria-hidden="true" tabindex="-1"></a>boston.fits <span class="ot">&lt;-</span></span>
+<span id="cb11-2"><a href="logistic-regression.html#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">glm</span>(</span>
+<span id="cb11-3"><a href="logistic-regression.html#cb11-3" aria-hidden="true" tabindex="-1"></a>    crim_above_med <span class="sc">~</span> nox,</span>
+<span id="cb11-4"><a href="logistic-regression.html#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> boston,</span>
+<span id="cb11-5"><a href="logistic-regression.html#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset =</span> boston.training,</span>
+<span id="cb11-6"><a href="logistic-regression.html#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> binomial</span>
+<span id="cb11-7"><a href="logistic-regression.html#cb11-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <p>And use the fit to predict the test data with <code>predict()</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="logistic-regression.html#cb5-1" aria-hidden="true" tabindex="-1"></a>boston.probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(boston.fits, boston[boston.test,], <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="logistic-regression.html#cb12-1" aria-hidden="true" tabindex="-1"></a>boston.probs <span class="ot">&lt;-</span> <span class="fu">predict</span>(boston.fits, boston[boston.test,], <span class="at">type =</span> <span class="st">&quot;response&quot;</span>)</span></code></pre></div>
 </div>
 <div id="how-to-assess-it-2" class="section level2 hasAnchor" number="4.5">
 <h2><span class="header-section-number">4.5</span> How to assess it<a href="logistic-regression.html#how-to-assess-it-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Assess the accuracy of the predictions by building a confusion matrix, using the same values (“No” and “Yes” in this case) as contained in the outcome variable we want to predict:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="logistic-regression.html#cb6-1" aria-hidden="true" tabindex="-1"></a>boston.pred <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;No&quot;</span>, <span class="fu">sum</span>(boston.test))</span>
-<span id="cb6-2"><a href="logistic-regression.html#cb6-2" aria-hidden="true" tabindex="-1"></a>boston.pred[boston.probs <span class="sc">&gt;</span> <span class="fl">0.5</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Yes&quot;</span></span>
-<span id="cb6-3"><a href="logistic-regression.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(boston.pred, boston[boston.test,]<span class="sc">$</span>crim_above_med)</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="logistic-regression.html#cb13-1" aria-hidden="true" tabindex="-1"></a>boston.pred <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="st">&quot;No&quot;</span>, <span class="fu">sum</span>(boston.test))</span>
+<span id="cb13-2"><a href="logistic-regression.html#cb13-2" aria-hidden="true" tabindex="-1"></a>boston.pred[boston.probs <span class="sc">&gt;</span> <span class="fl">0.5</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Yes&quot;</span></span>
+<span id="cb13-3"><a href="logistic-regression.html#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(boston.pred, boston[boston.test,]<span class="sc">$</span>crim_above_med)</span></code></pre></div>
 <pre><code>##            
 ## boston.pred No Yes
 ##         No  36  12
 ##         Yes  5  49</code></pre>
 <p>The above table shows that the model correctly predicted <code>crim_above_med</code> from <code>nox</code> 85 times out of 102, with 5 false positives and 12 false negatives. The accuracy of the model can be computed via the <code>mean()</code> of how often the predictions match the test data, a neat trick:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="logistic-regression.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(boston.pred <span class="sc">==</span> boston[boston.test,]<span class="sc">$</span>crim_above_med)</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="logistic-regression.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(boston.pred <span class="sc">==</span> boston[boston.test,]<span class="sc">$</span>crim_above_med)</span></code></pre></div>
 <pre><code>## [1] 0.8333333</code></pre>
 <p>The regression can be plotted with <code>ggplot2</code> and the <code>stat_smooth()</code> function, utilizing the <code>glm</code> method, like so:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="logistic-regression.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(boston, <span class="fu">aes</span>(<span class="at">x =</span> nox, <span class="at">y =</span> crim_above_med_num)) <span class="sc">+</span></span>
-<span id="cb10-2"><a href="logistic-regression.html#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
-<span id="cb10-3"><a href="logistic-regression.html#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(</span>
-<span id="cb10-4"><a href="logistic-regression.html#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">&quot;glm&quot;</span>,</span>
-<span id="cb10-5"><a href="logistic-regression.html#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
-<span id="cb10-6"><a href="logistic-regression.html#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb10-7"><a href="logistic-regression.html#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">method.args =</span> <span class="fu">list</span>(<span class="at">family =</span> binomial),</span>
-<span id="cb10-8"><a href="logistic-regression.html#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">&quot;red&quot;</span>,</span>
-<span id="cb10-9"><a href="logistic-regression.html#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">lty =</span> <span class="dv">2</span></span>
-<span id="cb10-10"><a href="logistic-regression.html#cb10-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="logistic-regression.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(boston, <span class="fu">aes</span>(<span class="at">x =</span> nox, <span class="at">y =</span> crim_above_med_num)) <span class="sc">+</span></span>
+<span id="cb17-2"><a href="logistic-regression.html#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb17-3"><a href="logistic-regression.html#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_smooth</span>(</span>
+<span id="cb17-4"><a href="logistic-regression.html#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">method =</span> <span class="st">&quot;glm&quot;</span>,</span>
+<span id="cb17-5"><a href="logistic-regression.html#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">formula =</span> y <span class="sc">~</span> x,</span>
+<span id="cb17-6"><a href="logistic-regression.html#cb17-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb17-7"><a href="logistic-regression.html#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">method.args =</span> <span class="fu">list</span>(<span class="at">family =</span> binomial),</span>
+<span id="cb17-8"><a href="logistic-regression.html#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">col =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb17-9"><a href="logistic-regression.html#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">lty =</span> <span class="dv">2</span></span>
+<span id="cb17-10"><a href="logistic-regression.html#cb17-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p>This shows that an observation with a <code>nox</code> value of 0.6 would have around a 90% probability of <code>crim_above_med</code> being true, or 1, while an observation with a <code>nox</code> value of 0.5 would only have around a 25% probability of <code>crim_above_med</code> being true.</p>
 </div>
 <div id="where-to-learn-more-2" class="section level2 hasAnchor" number="4.6">
