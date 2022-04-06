@@ -117,7 +117,7 @@
 
 \title{797ML Handbook}
 \author{Steve Linberg}
-\date{2022-04-04}
+\date{2022-04-06}
 
 \begin{document}
 \maketitle
@@ -209,7 +209,9 @@ Simple linear regression is where it all begins; among the simplest of all of th
 
 
 \begin{figure}
-\includegraphics[width=16.03in]{images/3_1} \caption{Simple linear regression plot (source: \citet{ISLR}, p.~62)}\label{fig:img-slr1}
+\centering
+\includegraphics{images/3_1.png}
+\caption{\label{fig:img-slr1}Simple linear regression plot (source: \citet{ISLR}, p.~62)}
 \end{figure}
 
 The figure above shows a plot of a simple linear regression, attempting to use the variable \texttt{TV} to predict \texttt{Sales.} The blue line is the line defined by the regression with its \(Y\) intercept and slope; the red dots are the actual observations of \texttt{Sales} for each measure of the predictor \texttt{TV} on the \(X\) axis. The thin blue lines are the error in the prediction.
@@ -438,7 +440,7 @@ In the example above, we see that the addition of \texttt{age} only added a tiny
 \item[What it does]
 Models the \emph{probability} that an observation falls into one of two categories
 \item[When to do it]
-When you are trying to predict a categorical variable with two possible outcomes, like true/false, instead of something continuous
+When you are trying to predict a categorical variable with two possible outcomes, like true/false, instead of something continuous like in linear regression
 \item[How to do it]
 With the \texttt{glm()} function, specifying \texttt{family\ =\ "binomial"}
 \item[How to assess it]
@@ -449,6 +451,8 @@ Look for a significant \(p\)-value for the predictor, and assess its accuracy ag
 \section{What it does}\label{what-it-does-2}}
 
 Logistic regression is used to make a prediction about whether an observation falls into one of two categories. This is an alternative to linear regression, which predicts a continuous outcome. A logistic regression results in a model that gives the probability of Y given X.
+
+XXX need an image here of the s-curve and some observations, steal from the book
 
 \hypertarget{when-to-do-it-2}{%
 \section{When to do it}\label{when-to-do-it-2}}
