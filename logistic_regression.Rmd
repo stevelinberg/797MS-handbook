@@ -36,7 +36,7 @@ As the TL;DR says: When you are trying to predict a categorical variable with tw
 
 First, it's important to note that logistic regression will give better results when the model is fit using *held out* or *training* data, and then tested against other data, to help avoid overfitting. It is not required, but it's recommended where possible.
 
-First, before that, fit a model using glm, making sure in this case that we have a categorical value to test for:
+First, before that, fit a model using `glm()`, making sure in this case that we have a categorical value to test for:
 
 ```{r}
 data(Boston)
