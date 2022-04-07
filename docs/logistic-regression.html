@@ -29,7 +29,7 @@ couple of dozen core methods used in machine learning.</p>" />
 <meta name="author" content="Steve Linberg" />
 
 
-<meta name="date" content="2022-04-06" />
+<meta name="date" content="2022-04-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -440,7 +440,7 @@ Figure 4.1: Linear regression plot (source: <a href="https://youtu.be/yIYKR4sgzI
 <div id="how-to-do-it-2" class="section level2 hasAnchor" number="4.4">
 <h2><span class="header-section-number">4.4</span> How to do it<a href="logistic-regression.html#how-to-do-it-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>First, it’s important to note that logistic regression will give better results when the model is fit using <em>held out</em> or <em>training</em> data, and then tested against other data, to help avoid overfitting. It is not required, but it’s recommended where possible.</p>
-<p>First, before that, fit a model using glm, making sure in this case that we have a categorical value to test for:</p>
+<p>First, before that, fit a model using <code>glm()</code>, making sure in this case that we have a categorical value to test for:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="logistic-regression.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Boston)</span>
 <span id="cb8-2"><a href="logistic-regression.html#cb8-2" aria-hidden="true" tabindex="-1"></a>boston <span class="ot">&lt;-</span> Boston <span class="sc">%&gt;%</span></span>
 <span id="cb8-3"><a href="logistic-regression.html#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>

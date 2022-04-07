@@ -117,7 +117,7 @@
 
 \title{797ML Handbook}
 \author{Steve Linberg}
-\date{2022-04-06}
+\date{2022-04-07}
 
 \begin{document}
 \maketitle
@@ -468,7 +468,7 @@ As the TL;DR says: When you are trying to predict a categorical variable with tw
 
 First, it's important to note that logistic regression will give better results when the model is fit using \emph{held out} or \emph{training} data, and then tested against other data, to help avoid overfitting. It is not required, but it's recommended where possible.
 
-First, before that, fit a model using glm, making sure in this case that we have a categorical value to test for:
+First, before that, fit a model using \texttt{glm()}, making sure in this case that we have a categorical value to test for:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -673,7 +673,7 @@ We again split the data into training and test sets:
 \end{Highlighting}
 \end{Shaded}
 
-And fit the above model to the training data using the \texttt{lda()} function (note: there is no \texttt{family} argument as with \texttt{glm()}, but the calls are otherwise identical):
+And fit the above model to the training data using the \texttt{lda()} function from the \href{https://cran.r-project.org/web/packages/MASS/index.html}{MASS} library\footnote{Note to my fellow New Englanders: the MASS library is named for a book titled ``Modern Applied Statistics with S'', and has nothing to do with Massachusetts or the Boston dataset we're using here} (note: there is no \texttt{family} argument as with \texttt{glm()}, but the calls are otherwise identical):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -724,6 +724,7 @@ And plotted:
 \end{Shaded}
 
 \includegraphics{_main_files/figure-latex/unnamed-chunk-22-1.pdf}
+
 The fit should be used to predict the test data, and the model can be assessed on its results:
 
 \begin{Shaded}
