@@ -151,12 +151,12 @@ The main purpose of this work is to be \emph{simple}, not to be \emph{comprehens
 
 The goal is to have no more than a few short paragraphs for each section, and to keep each explanation of the meanings of outcome variables to one sentence each.
 
-Each chapter will have a \href{https://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn\%27t_read}{TL;DR} section at the top with one-sentence answers to following questions:
+Each chapter will have a \href{https://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn\%27t_read}{TL;DR} section at the top with \emph{one-sentence answers} to following questions:
 
 \begin{itemize}
 \tightlist
 \item
-  What it does
+  What it does (answer the question starting with ``It\ldots{}'')
 \item
   When to do it
 \item
@@ -604,13 +604,18 @@ This shows that an observation with a \texttt{nox} value of 0.6 would have aroun
 \begin{itemize}
 \tightlist
 \item
-  Chapter 4 - 4.3 in \citet{ISLR}
+  Chapter 4 - 4.4 in \citet{ISLR}
 \item
   \href{https://www.youtube.com/watch?v=yIYKR4sgzI8}{StatQuest: Logistic Regression}
 \end{itemize}
 
-\hypertarget{multiple-logistic-regression}{%
-\chapter{TODO: Multiple Logistic Regression}\label{multiple-logistic-regression}}
+\hypertarget{notes-1}{%
+\section{Notes}\label{notes-1}}
+
+Like with linear regression, the ``multiple'' flavor of logistic regression works much the same way, with the specification of additional predictors in the formula, and so doesn't really warrant a whole chapter of its own. The selection of variables requires some effort, and is addressed under \protect\hyperlink{best_subset_selection}{best subser selection}.
+
+\hypertarget{linear-discriminant-analysis}{%
+\chapter{Linear Discriminant Analysis (LDA)}\label{linear-discriminant-analysis}}
 
 \hypertarget{tldr-3}{%
 \section{TL;DR}\label{tldr-3}}
@@ -618,42 +623,149 @@ This shows that an observation with a \texttt{nox} value of 0.6 would have aroun
 \begin{description}
 \tightlist
 \item[What it does]
-TODO
+Separates observations into categories, like logistic regression, but using category means and variances for separation rather than probabilities
 \item[When to do it]
-TODO
+When exploring various classifiers to see which works best for a given data set
 \item[How to do it]
-TODO
+With the \texttt{lda()} function, using training and testing sets
 \item[How to assess it]
-TODO
+Assess the accuracy of the predictions on the test set after training
 \end{description}
 
 \hypertarget{what-it-does-3}{%
 \section{What it does}\label{what-it-does-3}}
 
-TODO
+Similar to \protect\hyperlink{principal-component-analysis}{principal component analysys} (PCA), LDA reduces dimensionality and finds the best single axis to separate two (or more) groups of observations into categories using a least-squares method of distance from a mean. Like PCA, it returns a set of new axes for the data, organized by importance, so that the first axis is the one that explains the largest amount of variance, and so on, down to \(p - 1\) axes where \(p\) is the number of categories/dimensions.
+
+So, LDA will return 3 axes for a set of observations with 4 categories, or 1 for a set of observations with 2 categories. Each axis will have a loading score that indicates which variables had the biggest impacts on it.
 
 \hypertarget{when-to-do-it-3}{%
 \section{When to do it}\label{when-to-do-it-3}}
 
-TODO
+When you want to see if it will work better than other classification methods! It should always be tried along with other classifiers like \protect\hyperlink{logistic-regression}{logistic regression}, \protect\hyperlink{quadratic-discriminant-analysis}{quadratic discriminant analysis}, and \protect\hyperlink{naive-bayes}{Naive Bayes}.
 
 \hypertarget{how-to-do-it-3}{%
 \section{How to do it}\label{how-to-do-it-3}}
 
-TODO
+Again, using the Boston data from the \protect\hyperlink{logistic-regression}{logistic regression} chapter:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(Boston)}
+\NormalTok{boston }\OtherTok{\textless{}{-}}\NormalTok{ Boston }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \CommentTok{\# Create the categorical crim\_above\_med response variable}
+    \AttributeTok{crim\_above\_med =} \FunctionTok{as.factor}\NormalTok{(}\FunctionTok{ifelse}\NormalTok{(crim }\SpecialCharTok{\textgreater{}} \FunctionTok{median}\NormalTok{(crim), }\StringTok{"Yes"}\NormalTok{, }\StringTok{"No"}\NormalTok{)),}
+    \CommentTok{\# Also make a numeric version of crim\_above\_med for the plot}
+    \AttributeTok{crim\_above\_med\_num =} \FunctionTok{ifelse}\NormalTok{(crim }\SpecialCharTok{\textgreater{}} \FunctionTok{median}\NormalTok{(crim), }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+We again split the data into training and test sets:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1235}\NormalTok{)}
+\NormalTok{boston.training }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{FALSE}\NormalTok{, }\FunctionTok{nrow}\NormalTok{(boston))}
+\NormalTok{boston.training[}\FunctionTok{sample}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(boston), }\FunctionTok{nrow}\NormalTok{(boston) }\SpecialCharTok{*} \FloatTok{0.8}\NormalTok{)] }\OtherTok{\textless{}{-}} \ConstantTok{TRUE}
+\NormalTok{boston.test }\OtherTok{\textless{}{-}} \SpecialCharTok{!}\NormalTok{boston.training}
+\end{Highlighting}
+\end{Shaded}
+
+And fit the above model to the training data using the \texttt{lda()} function (note: there is no \texttt{family} argument as with \texttt{glm()}, but the calls are otherwise identical):
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{boston\_lda.fits }\OtherTok{\textless{}{-}}
+  \FunctionTok{lda}\NormalTok{(}
+\NormalTok{    crim\_above\_med }\SpecialCharTok{\textasciitilde{}}\NormalTok{ nox,}
+    \AttributeTok{data =}\NormalTok{ boston,}
+    \AttributeTok{subset =}\NormalTok{ boston.training,}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{how-to-assess-it-3}{%
 \section{How to assess it}\label{how-to-assess-it-3}}
 
-TODO
+The fit can be directly examined:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{boston\_lda.fits}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Call:
+## lda(crim_above_med ~ nox, data = boston, , subset = boston.training)
+## 
+## Prior probabilities of groups:
+##        No       Yes 
+## 0.5247525 0.4752475 
+## 
+## Group means:
+##           nox
+## No  0.4710519
+## Yes 0.6357865
+## 
+## Coefficients of linear discriminants:
+##          LD1
+## nox 12.29052
+\end{verbatim}
+
+And plotted:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(boston\_lda.fits)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{_main_files/figure-latex/unnamed-chunk-22-1.pdf}
+The fit should be used to predict the test data, and the model can be assessed on its results:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{boston\_lda.pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(boston\_lda.fits, boston[boston.test,])}
+\NormalTok{boston\_lda.class }\OtherTok{\textless{}{-}}\NormalTok{ boston\_lda.pred}\SpecialCharTok{$}\NormalTok{class}
+\FunctionTok{table}\NormalTok{(boston\_lda.class, boston[boston.test,]}\SpecialCharTok{$}\NormalTok{crim\_above\_med)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                 
+## boston_lda.class No Yes
+##              No  38  12
+##              Yes  3  49
+\end{verbatim}
+
+In this example, LDA made the correct categorization 87 times out of 102, with 3 false positives and 12 false negatives. Again, we can compute the prediction accuracy by the mean of the correct-to-wrong guesses:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(boston\_lda.class }\SpecialCharTok{==}\NormalTok{ boston[boston.test,]}\SpecialCharTok{$}\NormalTok{crim\_above\_med)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.8529412
+\end{verbatim}
 
 \hypertarget{where-to-learn-more-3}{%
 \section{Where to learn more}\label{where-to-learn-more-3}}
 
-TODO
+\begin{itemize}
+\tightlist
+\item
+  Chapter 4.4.1 - 4.4.2 in \citet{ISLR}
+\item
+  \href{https://www.youtube.com/watch?v=azXCzI57Yfc}{StatQuest: Linear Discriminant Analysis}
+\end{itemize}
 
-\hypertarget{linear-discriminant-analysis}{%
-\chapter{TODO: Linear Discriminant Analysis}\label{linear-discriminant-analysis}}
+\hypertarget{quadratic-discriminant-analysis}{%
+\chapter{TODO: Quadratic Discriminant Analysis}\label{quadratic-discriminant-analysis}}
 
 \hypertarget{tldr-4}{%
 \section{TL;DR}\label{tldr-4}}
@@ -695,8 +807,8 @@ TODO
 
 TODO
 
-\hypertarget{quadratic-discriminant-analysis}{%
-\chapter{TODO: Quadratic Discriminant Analysis}\label{quadratic-discriminant-analysis}}
+\hypertarget{naive-bayes}{%
+\chapter{TODO: Naive Bayes}\label{naive-bayes}}
 
 \hypertarget{tldr-5}{%
 \section{TL;DR}\label{tldr-5}}
@@ -738,8 +850,8 @@ TODO
 
 TODO
 
-\hypertarget{naive-bayes}{%
-\chapter{TODO: Naive Bayes}\label{naive-bayes}}
+\hypertarget{k-nearest-neighbors}{%
+\chapter{TODO: K-Nearest Neighbors}\label{k-nearest-neighbors}}
 
 \hypertarget{tldr-6}{%
 \section{TL;DR}\label{tldr-6}}
@@ -781,8 +893,8 @@ TODO
 
 TODO
 
-\hypertarget{k-nearest-neighbors}{%
-\chapter{TODO: K-Nearest Neighbors}\label{k-nearest-neighbors}}
+\hypertarget{poisson-regression}{%
+\chapter{TODO: Poisson Regression}\label{poisson-regression}}
 
 \hypertarget{tldr-7}{%
 \section{TL;DR}\label{tldr-7}}
@@ -824,8 +936,8 @@ TODO
 
 TODO
 
-\hypertarget{poisson-regression}{%
-\chapter{TODO: Poisson Regression}\label{poisson-regression}}
+\hypertarget{cross-validation}{%
+\chapter{TODO: Cross-Validation}\label{cross-validation}}
 
 \hypertarget{tldr-8}{%
 \section{TL;DR}\label{tldr-8}}
@@ -867,8 +979,8 @@ TODO
 
 TODO
 
-\hypertarget{cross-validation}{%
-\chapter{TODO: Cross-Validation}\label{cross-validation}}
+\hypertarget{bootstrap}{%
+\chapter{TODO: Bootstrap}\label{bootstrap}}
 
 \hypertarget{tldr-9}{%
 \section{TL;DR}\label{tldr-9}}
@@ -910,8 +1022,8 @@ TODO
 
 TODO
 
-\hypertarget{bootstrap}{%
-\chapter{TODO: Bootstrap}\label{bootstrap}}
+\hypertarget{best-subset-selection}{%
+\chapter{TODO: Best Subset Selection}\label{best-subset-selection}}
 
 \hypertarget{tldr-10}{%
 \section{TL;DR}\label{tldr-10}}
@@ -953,8 +1065,8 @@ TODO
 
 TODO
 
-\hypertarget{best-subset-selection}{%
-\chapter{TODO: Best Subset Selection}\label{best-subset-selection}}
+\hypertarget{stepwise-selection}{%
+\chapter{TODO: Stepwise Selection}\label{stepwise-selection}}
 
 \hypertarget{tldr-11}{%
 \section{TL;DR}\label{tldr-11}}
@@ -996,8 +1108,8 @@ TODO
 
 TODO
 
-\hypertarget{stepwise-selection}{%
-\chapter{TODO: Stepwise Selection}\label{stepwise-selection}}
+\hypertarget{ridge-regression}{%
+\chapter{TODO: Ridge Regression}\label{ridge-regression}}
 
 \hypertarget{tldr-12}{%
 \section{TL;DR}\label{tldr-12}}
@@ -1039,8 +1151,8 @@ TODO
 
 TODO
 
-\hypertarget{ridge-regression}{%
-\chapter{TODO: Ridge Regression}\label{ridge-regression}}
+\hypertarget{lasso}{%
+\chapter{TODO: Lasso}\label{lasso}}
 
 \hypertarget{tldr-13}{%
 \section{TL;DR}\label{tldr-13}}
@@ -1082,8 +1194,8 @@ TODO
 
 TODO
 
-\hypertarget{lasso}{%
-\chapter{TODO: Lasso}\label{lasso}}
+\hypertarget{principal-component-regression}{%
+\chapter{TODO: Principal Component Regression}\label{principal-component-regression}}
 
 \hypertarget{tldr-14}{%
 \section{TL;DR}\label{tldr-14}}
@@ -1125,8 +1237,8 @@ TODO
 
 TODO
 
-\hypertarget{principal-component-regression}{%
-\chapter{TODO: Principal Component Regression}\label{principal-component-regression}}
+\hypertarget{bagging}{%
+\chapter{TODO: Bagging}\label{bagging}}
 
 \hypertarget{tldr-15}{%
 \section{TL;DR}\label{tldr-15}}
@@ -1168,8 +1280,8 @@ TODO
 
 TODO
 
-\hypertarget{bagging}{%
-\chapter{TODO: Bagging}\label{bagging}}
+\hypertarget{random-forests}{%
+\chapter{TODO: Random Forests}\label{random-forests}}
 
 \hypertarget{tldr-16}{%
 \section{TL;DR}\label{tldr-16}}
@@ -1211,8 +1323,8 @@ TODO
 
 TODO
 
-\hypertarget{random-forests}{%
-\chapter{TODO: Random Forests}\label{random-forests}}
+\hypertarget{boosting}{%
+\chapter{TODO: Boosting}\label{boosting}}
 
 \hypertarget{tldr-17}{%
 \section{TL;DR}\label{tldr-17}}
@@ -1254,8 +1366,8 @@ TODO
 
 TODO
 
-\hypertarget{boosting}{%
-\chapter{TODO: Boosting}\label{boosting}}
+\hypertarget{bayesian-additive-regression-trees}{%
+\chapter{TODO: Bayesian Additive Regression Trees}\label{bayesian-additive-regression-trees}}
 
 \hypertarget{tldr-18}{%
 \section{TL;DR}\label{tldr-18}}
@@ -1297,8 +1409,8 @@ TODO
 
 TODO
 
-\hypertarget{bayesian-additive-regression-trees}{%
-\chapter{TODO: Bayesian Additive Regression Trees}\label{bayesian-additive-regression-trees}}
+\hypertarget{support-vector-machines}{%
+\chapter{TODO: Support Vector Machines}\label{support-vector-machines}}
 
 \hypertarget{tldr-19}{%
 \section{TL;DR}\label{tldr-19}}
@@ -1340,8 +1452,8 @@ TODO
 
 TODO
 
-\hypertarget{support-vector-machines}{%
-\chapter{TODO: Support Vector Machines}\label{support-vector-machines}}
+\hypertarget{principal-component-analysis}{%
+\chapter{TODO: Principal Component Analysis}\label{principal-component-analysis}}
 
 \hypertarget{tldr-20}{%
 \section{TL;DR}\label{tldr-20}}
@@ -1383,8 +1495,8 @@ TODO
 
 TODO
 
-\hypertarget{principal-component-analysis}{%
-\chapter{TODO: Principal Component Analysis}\label{principal-component-analysis}}
+\hypertarget{k-means-clustering}{%
+\chapter{TODO: K-Means Clustering}\label{k-means-clustering}}
 
 \hypertarget{tldr-21}{%
 \section{TL;DR}\label{tldr-21}}
@@ -1426,8 +1538,8 @@ TODO
 
 TODO
 
-\hypertarget{k-means-clustering}{%
-\chapter{TODO: K-Means Clustering}\label{k-means-clustering}}
+\hypertarget{hierarchical-clustering}{%
+\chapter{TODO: Hierarchical Clustering}\label{hierarchical-clustering}}
 
 \hypertarget{tldr-22}{%
 \section{TL;DR}\label{tldr-22}}
@@ -1466,49 +1578,6 @@ TODO
 
 \hypertarget{where-to-learn-more-22}{%
 \section{Where to learn more}\label{where-to-learn-more-22}}
-
-TODO
-
-\hypertarget{hierarchical-clustering}{%
-\chapter{TODO: Hierarchical Clustering}\label{hierarchical-clustering}}
-
-\hypertarget{tldr-23}{%
-\section{TL;DR}\label{tldr-23}}
-
-\begin{description}
-\tightlist
-\item[What it does]
-TODO
-\item[When to do it]
-TODO
-\item[How to do it]
-TODO
-\item[How to assess it]
-TODO
-\end{description}
-
-\hypertarget{what-it-does-23}{%
-\section{What it does}\label{what-it-does-23}}
-
-TODO
-
-\hypertarget{when-to-do-it-23}{%
-\section{When to do it}\label{when-to-do-it-23}}
-
-TODO
-
-\hypertarget{how-to-do-it-23}{%
-\section{How to do it}\label{how-to-do-it-23}}
-
-TODO
-
-\hypertarget{how-to-assess-it-23}{%
-\section{How to assess it}\label{how-to-assess-it-23}}
-
-TODO
-
-\hypertarget{where-to-learn-more-23}{%
-\section{Where to learn more}\label{where-to-learn-more-23}}
 
 TODO
 

@@ -115,6 +115,9 @@ This shows that an observation with a `nox` value of 0.6 would have around a 90%
 
 ## Where to learn more
 
-- Chapter 4 - 4.3 in @ISLR
+- Chapter 4 - 4.4 in @ISLR
 - [StatQuest: Logistic Regression](https://www.youtube.com/watch?v=yIYKR4sgzI8)
 
+## Notes
+
+Like with linear regression, the "multiple" flavor of logistic regression works much the same way, with the specification of additional predictors in the formula, and so doesn't really warrant a whole chapter of its own. The selection of variables requires some effort, and is addressed under [best subser selection](#best_subset_selection).

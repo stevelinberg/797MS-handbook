@@ -3,20 +3,22 @@
 ## TL;DR
 
 What it does
-: TODO
+: Models the *probability* that an observation falls into one of two categories, when using more than one predictor
 
 When to do it
-: TODO
+: When you have multiple possible predictors and aren't getting a high enough success rate in a simple logistic regression, and want to see if multiple predictors can improve the model
 
 How to do it
-: TODO
+: With the `glm()` function, specifying `family = "binomial"` and listing more than one predictor in the formula
 
 How to assess it
-: TODO
+: Same as for simple [logistic regression](#logistic-regression): Look for significant $p$-values for the predictors, and assess the fit's predictive accuracy against training data
 
 ## What it does
 
-TODO
+Functionally, multiple logistic regression is the same as simple logistic regression, with the addition of more predictor variables in the formula.
+
+XXX in fact, we can probably do without this page.
 
 ## When to do it
 

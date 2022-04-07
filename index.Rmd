@@ -32,9 +32,9 @@ The main purpose of this work is to be *simple*, not to be *comprehensive*. We w
 
 The goal is to have no more than a few short paragraphs for each section, and to keep each explanation of the meanings of outcome variables to one sentence each.
 
-Each chapter will have a [TL;DR](https://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn%27t_read) section at the top with one-sentence answers to following questions:
+Each chapter will have a [TL;DR](https://en.wikipedia.org/wiki/Wikipedia:Too_long;_didn%27t_read) section at the top with *one-sentence answers* to following questions:
 
-- What it does
+- What it does (answer the question starting with "It...")
 - When to do it
 - How to do it
 - How to assess it
