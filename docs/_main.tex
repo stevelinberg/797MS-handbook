@@ -656,8 +656,6 @@ Again, using the Boston data from the \protect\hyperlink{logistic-regression}{lo
   \FunctionTok{mutate}\NormalTok{(}
     \CommentTok{\# Create the categorical crim\_above\_med response variable}
     \AttributeTok{crim\_above\_med =} \FunctionTok{as.factor}\NormalTok{(}\FunctionTok{ifelse}\NormalTok{(crim }\SpecialCharTok{\textgreater{}} \FunctionTok{median}\NormalTok{(crim), }\StringTok{"Yes"}\NormalTok{, }\StringTok{"No"}\NormalTok{)),}
-    \CommentTok{\# Also make a numeric version of crim\_above\_med for the plot}
-    \AttributeTok{crim\_above\_med\_num =} \FunctionTok{ifelse}\NormalTok{(crim }\SpecialCharTok{\textgreater{}} \FunctionTok{median}\NormalTok{(crim), }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)}
 \NormalTok{  )}
 \end{Highlighting}
 \end{Shaded}
@@ -673,7 +671,7 @@ We again split the data into training and test sets:
 \end{Highlighting}
 \end{Shaded}
 
-And fit the above model to the training data using the \texttt{lda()} function from the \href{https://cran.r-project.org/web/packages/MASS/index.html}{MASS} library\footnote{Note to my fellow New Englanders: the MASS library is named for a book titled ``Modern Applied Statistics with S'', and has nothing to do with Massachusetts or the Boston dataset we're using here} (note: there is no \texttt{family} argument as with \texttt{glm()}, but the calls are otherwise identical):
+And fit the above model to the training data using the \texttt{lda()} function from the \href{https://cran.r-project.org/web/packages/MASS/index.html}{MASS} library\footnote{Note to my fellow New Englanders: the MASS library is named for a book titled ``Modern Applied Statistics with S'', and although it does contain an earlier version of the Boston dataset (among many others), it has nothing to do with Massachusetts, and our Boston dataset comes from the ISLR2 library.} (note: there is no \texttt{family} argument as with \texttt{glm()}, but the calls are otherwise identical):
 
 \begin{Shaded}
 \begin{Highlighting}[]

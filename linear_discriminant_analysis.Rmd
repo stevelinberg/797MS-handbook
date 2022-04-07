@@ -40,8 +40,6 @@ boston <- Boston %>%
   mutate(
     # Create the categorical crim_above_med response variable
     crim_above_med = as.factor(ifelse(crim > median(crim), "Yes", "No")),
-    # Also make a numeric version of crim_above_med for the plot
-    crim_above_med_num = ifelse(crim > median(crim), 1, 0)
   )
 ```
 
@@ -54,7 +52,7 @@ boston.training[sample(nrow(boston), nrow(boston) * 0.8)] <- TRUE
 boston.test <- !boston.training
 ```
 
-And fit the above model to the training data using the `lda()` function from the [MASS](https://cran.r-project.org/web/packages/MASS/index.html) library^[Note to my fellow New Englanders: the MASS library is named for a book titled "Modern Applied Statistics with S", and has nothing to do with Massachusetts or the Boston dataset we're using here] (note: there is no `family` argument as with `glm()`, but the calls are otherwise identical):
+And fit the above model to the training data using the `lda()` function from the [MASS](https://cran.r-project.org/web/packages/MASS/index.html) library^[Note to my fellow New Englanders: the MASS library is named for a book titled "Modern Applied Statistics with S", and although it does contain an earlier version of the Boston dataset (among many others), it has nothing to do with Massachusetts, and our Boston dataset comes from the ISLR2 library.] (note: there is no `family` argument as with `glm()`, but the calls are otherwise identical):
 
 ```{r}
 boston_lda.fits <-
