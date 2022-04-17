@@ -4,13 +4,13 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Chapter 6 TODO: Quadratic Discriminant Analysis | 797ML Handbook</title>
+  <title>Chapter 6 Quadratic Discriminant Analysis | 797ML Handbook</title>
   <meta name="description" content="<p>This book is being written as part of a final project for 797ML at UMass
 Amherst, spring 2022. It contains a simple reference and breakdown for a
 couple of dozen core methods used in machine learning.</p>" />
   <meta name="generator" content="bookdown 0.25 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Chapter 6 TODO: Quadratic Discriminant Analysis | 797ML Handbook" />
+  <meta property="og:title" content="Chapter 6 Quadratic Discriminant Analysis | 797ML Handbook" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="<p>This book is being written as part of a final project for 797ML at UMass
@@ -19,7 +19,7 @@ couple of dozen core methods used in machine learning.</p>" />
   <meta name="github-repo" content="stevelinberg/797MS-handbook" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Chapter 6 TODO: Quadratic Discriminant Analysis | 797ML Handbook" />
+  <meta name="twitter:title" content="Chapter 6 Quadratic Discriminant Analysis | 797ML Handbook" />
   
   <meta name="twitter:description" content="<p>This book is being written as part of a final project for 797ML at UMass
 Amherst, spring 2022. It contains a simple reference and breakdown for a
@@ -164,7 +164,7 @@ div.csl-indent {
 <li><a href="./">797ML Handbook</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About<span></span></a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> cover-image: path to the social sharing image like images/cover.jpg<span></span></a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#authoring-guidelines"><i class="fa fa-check"></i><b>1.1</b> Authoring guidelines<span></span></a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#contact"><i class="fa fa-check"></i><b>1.2</b> Contact<span></span></a></li>
@@ -208,7 +208,7 @@ div.csl-indent {
 <li class="chapter" data-level="5.5" data-path="linear-discriminant-analysis.html"><a href="linear-discriminant-analysis.html#how-to-assess-it-3"><i class="fa fa-check"></i><b>5.5</b> How to assess it<span></span></a></li>
 <li class="chapter" data-level="5.6" data-path="linear-discriminant-analysis.html"><a href="linear-discriminant-analysis.html#where-to-learn-more-3"><i class="fa fa-check"></i><b>5.6</b> Where to learn more<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="quadratic-discriminant-analysis.html"><a href="quadratic-discriminant-analysis.html"><i class="fa fa-check"></i><b>6</b> TODO: Quadratic Discriminant Analysis<span></span></a>
+<li class="chapter" data-level="6" data-path="quadratic-discriminant-analysis.html"><a href="quadratic-discriminant-analysis.html"><i class="fa fa-check"></i><b>6</b> Quadratic Discriminant Analysis<span></span></a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="quadratic-discriminant-analysis.html"><a href="quadratic-discriminant-analysis.html#tldr-4"><i class="fa fa-check"></i><b>6.1</b> TL;DR<span></span></a></li>
 <li class="chapter" data-level="6.2" data-path="quadratic-discriminant-analysis.html"><a href="quadratic-discriminant-analysis.html#what-it-does-4"><i class="fa fa-check"></i><b>6.2</b> What it does<span></span></a></li>
@@ -400,48 +400,106 @@ div.csl-indent {
 
             <section class="normal" id="section-">
 <div id="quadratic-discriminant-analysis" class="section level1 hasAnchor" number="6">
-<h1><span class="header-section-number">Chapter 6</span> TODO: Quadratic Discriminant Analysis<a href="quadratic-discriminant-analysis.html#quadratic-discriminant-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<h1><span class="header-section-number">Chapter 6</span> Quadratic Discriminant Analysis<a href="quadratic-discriminant-analysis.html#quadratic-discriminant-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="tldr-4" class="section level2 hasAnchor" number="6.1">
 <h2><span class="header-section-number">6.1</span> TL;DR<a href="quadratic-discriminant-analysis.html#tldr-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <dl>
 <dt>What it does</dt>
 <dd>
-TODO
+Assigns observations to categories like <a href="linear-discriminant-analysis.html#linear-discriminant-analysis">linear discriminant analysis</a>, but with a more flexible / curved boundary rather than a straight line
 </dd>
 <dt>When to do it</dt>
 <dd>
-TODO
+When <a href="linear-discriminant-analysis.html#linear-discriminant-analysis">linear discriminant analysis</a> isn’t giving good enough results (esp. if the dataset is very large)
 </dd>
 <dt>How to do it</dt>
 <dd>
-TODO
+With the <code>qda()</code> function from the <a href="https://cran.r-project.org/web/packages/MASS/index.html">MASS</a> library, using training and testing sets
 </dd>
 <dt>How to assess it</dt>
 <dd>
-TODO
+Assess the accuracy of the predictions on the test set after training
 </dd>
 </dl>
 </div>
 <div id="what-it-does-4" class="section level2 hasAnchor" number="6.2">
 <h2><span class="header-section-number">6.2</span> What it does<a href="quadratic-discriminant-analysis.html#what-it-does-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>TODO</p>
+<p>Just like <a href="linear-discriminant-analysis.html#linear-discriminant-analysis">linear discriminant analysis</a>, quadratic discriminant analysis attempts to separate observations into two or more classes or categories, but it allows for a curved boundary between the classes. Which approach gives better results depends on the shape of the Bayes decision boundary. The following figure from <span class="citation">James et al. (<a href="#ref-ISLR" role="doc-biblioref">2021</a>)</span> shows the two approaches:</p>
+
+<div class="figure"><span style="display:block;" id="fig:img-slr49"></span>
+<img src="images/4_9.png" alt="LDA and QDA plots (source: James et al. (2021), p. 154)"  />
+<p class="caption">
+Figure 6.1: LDA and QDA plots (source: <span class="citation">James et al. (<a href="#ref-ISLR" role="doc-biblioref">2021</a>)</span>, p. 154)
+</p>
+</div>
+<p>The purple dashed line in both diagrams shows the Bayes decision boundary. The LDA line in the left plot shows this class separation line as straight; the QDA line on the right is curved.</p>
 </div>
 <div id="when-to-do-it-4" class="section level2 hasAnchor" number="6.3">
 <h2><span class="header-section-number">6.3</span> When to do it<a href="quadratic-discriminant-analysis.html#when-to-do-it-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>TODO</p>
+<p>Use QDA when the linear separation of <a href="linear-discriminant-analysis.html#linear-discriminant-analysis">linear discriminant analysis</a> isn’t giving good enough results, and you think a curved (or quadratic) line might fit better.</p>
 </div>
 <div id="how-to-do-it-4" class="section level2 hasAnchor" number="6.4">
 <h2><span class="header-section-number">6.4</span> How to do it<a href="quadratic-discriminant-analysis.html#how-to-do-it-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>TODO</p>
+<p>Exactly like <a href="linear-discriminant-analysis.html#linear-discriminant-analysis">linear discriminant analysis</a>, except for the <code>qda()</code> call instead of <code>lda()</code>. Train the model on training data, assess it against test data.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="quadratic-discriminant-analysis.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Boston)</span>
+<span id="cb1-2"><a href="quadratic-discriminant-analysis.html#cb1-2" aria-hidden="true" tabindex="-1"></a>boston <span class="ot">&lt;-</span> Boston <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="quadratic-discriminant-analysis.html#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-4"><a href="quadratic-discriminant-analysis.html#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the categorical crim_above_med response variable</span></span>
+<span id="cb1-5"><a href="quadratic-discriminant-analysis.html#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">crim_above_med =</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(crim <span class="sc">&gt;</span> <span class="fu">median</span>(crim), <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>)),</span>
+<span id="cb1-6"><a href="quadratic-discriminant-analysis.html#cb1-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>We again split the data into training and test sets:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="quadratic-discriminant-analysis.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1235</span>)</span>
+<span id="cb2-2"><a href="quadratic-discriminant-analysis.html#cb2-2" aria-hidden="true" tabindex="-1"></a>boston.training <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">FALSE</span>, <span class="fu">nrow</span>(boston))</span>
+<span id="cb2-3"><a href="quadratic-discriminant-analysis.html#cb2-3" aria-hidden="true" tabindex="-1"></a>boston.training[<span class="fu">sample</span>(<span class="fu">nrow</span>(boston), <span class="fu">nrow</span>(boston) <span class="sc">*</span> <span class="fl">0.8</span>)] <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb2-4"><a href="quadratic-discriminant-analysis.html#cb2-4" aria-hidden="true" tabindex="-1"></a>boston.test <span class="ot">&lt;-</span> <span class="sc">!</span>boston.training</span></code></pre></div>
+<p>and call <code>qda()</code> on the training data:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="quadratic-discriminant-analysis.html#cb3-1" aria-hidden="true" tabindex="-1"></a>boston_qda.fits <span class="ot">&lt;-</span></span>
+<span id="cb3-2"><a href="quadratic-discriminant-analysis.html#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">qda</span>(</span>
+<span id="cb3-3"><a href="quadratic-discriminant-analysis.html#cb3-3" aria-hidden="true" tabindex="-1"></a>    crim_above_med <span class="sc">~</span> nox,</span>
+<span id="cb3-4"><a href="quadratic-discriminant-analysis.html#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> boston,</span>
+<span id="cb3-5"><a href="quadratic-discriminant-analysis.html#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset =</span> boston.training,</span>
+<span id="cb3-6"><a href="quadratic-discriminant-analysis.html#cb3-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 </div>
 <div id="how-to-assess-it-4" class="section level2 hasAnchor" number="6.5">
 <h2><span class="header-section-number">6.5</span> How to assess it<a href="quadratic-discriminant-analysis.html#how-to-assess-it-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>TODO</p>
+<p>As with <code>lda()</code>, the resulting fit can be directly examined:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="quadratic-discriminant-analysis.html#cb4-1" aria-hidden="true" tabindex="-1"></a>boston_qda.fits</span></code></pre></div>
+<pre><code>## Call:
+## qda(crim_above_med ~ nox, data = boston, , subset = boston.training)
+## 
+## Prior probabilities of groups:
+##        No       Yes 
+## 0.5247525 0.4752475 
+## 
+## Group means:
+##           nox
+## No  0.4710519
+## Yes 0.6357865</code></pre>
+<p>Note that in this example, the <code>Prior probabilities of groups</code> and <code>Group means</code> assessments are identical to those from <code>lda()</code>. There is no linear discriminant coefficient, because this is not a linear discriminant! The rest of the output is identical.</p>
+<p>We then call <code>predict</code> on the QDA fit, to predict the <code>crim_above_med</code> variable from <code>nox</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="quadratic-discriminant-analysis.html#cb6-1" aria-hidden="true" tabindex="-1"></a>boston_qda.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(boston_qda.fits, boston[boston.test, ])</span>
+<span id="cb6-2"><a href="quadratic-discriminant-analysis.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(boston_qda.pred<span class="sc">$</span>class, boston[boston.test, ]<span class="sc">$</span>crim_above_med)</span></code></pre></div>
+<pre><code>##      
+##       No Yes
+##   No  38  12
+##   Yes  3  49</code></pre>
+<p>In this example, just like LDA, QDA made the correct categorization 87 times out of 102, with 3 false positives and 12 false negatives. And again, we can compute the prediction accuracy by the mean of the correct-to-wrong guesses:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="quadratic-discriminant-analysis.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(boston_qda.pred<span class="sc">$</span>class <span class="sc">==</span> boston[boston.test, ]<span class="sc">$</span>crim_above_med)</span></code></pre></div>
+<pre><code>## [1] 0.8529412</code></pre>
+<p>In this case, QDA offered no increase in prediction accuracy over LDA, so there is no reason to prefer it (although it also performed no poorer).</p>
 </div>
 <div id="where-to-learn-more-4" class="section level2 hasAnchor" number="6.6">
 <h2><span class="header-section-number">6.6</span> Where to learn more<a href="quadratic-discriminant-analysis.html#where-to-learn-more-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>TODO</p>
+<ul>
+<li>Chapter 4.4.3 in <span class="citation">James et al. (<a href="#ref-ISLR" role="doc-biblioref">2021</a>)</span></li>
+</ul>
 
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-ISLR" class="csl-entry">
+James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. 2021. <em>An Introduction to Statistical Learning</em>. 2nd ed. Springer. <a href="https://link.springer.com/book/10.1007/978-1-0716-1418-1">https://link.springer.com/book/10.1007/978-1-0716-1418-1</a>.
 </div>
 </div>
             </section>
@@ -504,20 +562,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>
