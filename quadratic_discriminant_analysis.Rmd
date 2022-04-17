@@ -22,7 +22,7 @@ How to assess it
 
 ## What it does
 
-Just like [linear discriminant analysis](#linear-discriminant-analysis), quadratic discriminant analysis attempts to separate observations into two or more classes or categories, but it allows for a curved boundary between the classes. Which approach gives better results depends on the shape of the Bayes decision boundary. The following figure from @ISLR shows the two approaches:
+Just like [linear discriminant analysis](#linear-discriminant-analysis), quadratic discriminant analysis attempts to separate observations into two or more classes or categories, but it allows for a curved boundary between the classes. Which approach gives better results depends on the shape of the Bayes decision boundary for any particular dataset. The following figure from @ISLR shows the two approaches:
 
 (ref:img-slr49) LDA and QDA plots (source: @ISLR, p. 154)
 

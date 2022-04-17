@@ -1,36 +1,109 @@
-# TODO: Naive Bayes {#naive-bayes}
+#  Naive Bayes {#naive-bayes}
+
+```{r include=FALSE}
+library(tidyverse)
+library(ISLR2)
+library(e1071)
+```
 
 ## TL;DR
 
 What it does
-: TODO
+: Provides yet another way to try to classify observations into one or more categories
 
 When to do it
-: TODO
+: When you're rounding out your exhaustive try-them-all process to try to determine the best classifier for your data after [linear discriminant analysis](#linear-discriminant-analysis) and [quadratic discriminant analysis](#quadratic-discriminant-analysis)
 
 How to do it
-: TODO
+: With the `naiveBayes()` function from the [e1071](https://cran.r-project.org/web/packages/e1071/index.html) library
 
 How to assess it
-: TODO
+: As with the other methods, assess it on test data after training and see if its accuracy is better than other methods
 
 ## What it does
 
-TODO
+Naive Bayes makes the assumption that there is no association between the predictors. According to @ISLR, this still yields "decent results" even though that's generally not true, especially in datasets where the number of observations $n$ is smallish relative to the number of variables $p$.
 
 ## When to do it
 
-TODO
+When you're rounding our your assessment of the accuracy of the various classification methods looking for the best one.
+
+TODO: there must be a better explanation for this.
 
 ## How to do it
 
-TODO
+Exactly like [linear discriminant analysis](#linear-discriminant-analysis) and [quadratic discriminant analysis](#quadratic-discriminant-analysis), except for the `naiveBayes()` call instead of `qda()` or `lda()`. Train the model on training data, assess it against test data.
+
+```{r}
+data(Boston)
+boston <- Boston %>%
+  mutate(
+    # Create the categorical crim_above_med response variable
+    crim_above_med = as.factor(ifelse(crim > median(crim), "Yes", "No")),
+  )
+```
+
+We again split the data into training and test sets:
+
+```{r}
+set.seed(1235)
+boston.training <- rep(FALSE, nrow(boston))
+boston.training[sample(nrow(boston), nrow(boston) * 0.8)] <- TRUE
+boston.test <- !boston.training
+```
+
+and call `naiveBayes()` on the training data:
+
+```{r}
+boston_nb.fit <-
+  naiveBayes(
+    crim_above_med ~ nox,
+    data = boston,
+    subset = boston.training,
+  )
+```
 
 ## How to assess it
 
-TODO
+```{r}
+boston_nb.fit
+```
+
+In the output above, we see our `A-priori probabilities`, which like the `Prior probabilities` of `lda()` and `qda()` show the percentage of observations in each of the outcome categories:
+
+```r
+> mean(boston[boston.training,]$crim_above_med == "Yes")
+[1] 0.4752475
+> mean(boston[boston.training,]$crim_above_med == "No")
+[1] 0.5247525
+```
+
+The `Conditional probabilities` are identical to the `Group means` from `lda()` and `qda()`, showing the means of the predictor variable (`nox` in this case) for each of the categories:
+
+```{r}
+boston[boston.training, ] %>%
+  group_by(crim_above_med) %>%
+  summarize("Group means" = mean(nox))
+```
+
+All of these results are the same as `lda()` and `qda()`. The Naive Bayes output also includes a second column in the `Conditional probabilities` section, which is the standard deviation for the (in this case `nox`) variable in each category.
+
+After the fit is built, we can run prediction as with the other methods, to predict the `crim_above_med` variable from `nox` (note that we just make a table of the prediction output itself, without the `$class` attribute):
+
+```{r}
+boston_nb.pred <- predict(boston_nb.fit, boston[boston.test, ])
+table(boston_nb.pred, boston[boston.test, ]$crim_above_med)
+```
+
+In this example, just like LDA and QDA, Naive Bayes made the correct categorization 87 times out of 102, with 3 false positives and 12 false negatives. And again, we can compute the prediction accuracy by the mean of the correct-to-wrong guesses:
+
+```{r}
+mean(boston_nb.pred == boston[boston.test, ]$crim_above_med)
+```
+
+We see again here that Naive Bayes performed identically to `lda()` and `qda()`. This means we probably need a better example for this document.
 
 ## Where to learn more
 
-TODO
+- Chapter 4.4.4 in @ISLR
 

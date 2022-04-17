@@ -217,7 +217,7 @@ div.csl-indent {
 <li class="chapter" data-level="6.5" data-path="quadratic-discriminant-analysis.html"><a href="quadratic-discriminant-analysis.html#how-to-assess-it-4"><i class="fa fa-check"></i><b>6.5</b> How to assess it<span></span></a></li>
 <li class="chapter" data-level="6.6" data-path="quadratic-discriminant-analysis.html"><a href="quadratic-discriminant-analysis.html#where-to-learn-more-4"><i class="fa fa-check"></i><b>6.6</b> Where to learn more<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="naive-bayes.html"><a href="naive-bayes.html"><i class="fa fa-check"></i><b>7</b> TODO: Naive Bayes<span></span></a>
+<li class="chapter" data-level="7" data-path="naive-bayes.html"><a href="naive-bayes.html"><i class="fa fa-check"></i><b>7</b> Naive Bayes<span></span></a>
 <ul>
 <li class="chapter" data-level="7.1" data-path="naive-bayes.html"><a href="naive-bayes.html#tldr-5"><i class="fa fa-check"></i><b>7.1</b> TL;DR<span></span></a></li>
 <li class="chapter" data-level="7.2" data-path="naive-bayes.html"><a href="naive-bayes.html#what-it-does-5"><i class="fa fa-check"></i><b>7.2</b> What it does<span></span></a></li>
@@ -465,6 +465,20 @@ gitbook.start({
 });
 </script>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 
 </html>
