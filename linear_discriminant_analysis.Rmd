@@ -71,28 +71,35 @@ The fit can be directly examined:
 boston_lda.fits
 ```
 
+<!--
+TODO: explain some of that
+-->
+
 And plotted:
 
 ```{r}
 plot(boston_lda.fits)
 ```
 
+<!--
+TODO: explain the blue legos, what are we looking at?
+-->
+
 The fit should be used to predict the test data, and the model can be assessed on its results:
 
 ```{r}
-boston_lda.pred <- predict(boston_lda.fits, boston[boston.test,])
-boston_lda.class <- boston_lda.pred$class
-table(boston_lda.class, boston[boston.test,]$crim_above_med)
+boston_lda.pred <- predict(boston_lda.fits, boston[boston.test, ])
+table(boston_lda.pred$class, boston[boston.test, ]$crim_above_med)
 ```
 
 In this example, LDA made the correct categorization 87 times out of 102, with 3 false positives and 12 false negatives. Again, we can compute the prediction accuracy by the mean of the correct-to-wrong guesses:
 
 ```{r}
-mean(boston_lda.class == boston[boston.test,]$crim_above_med)
+mean(boston_lda.pred$class == boston[boston.test, ]$crim_above_med)
 ```
 
 <!--
-XXX need something on interpreting the output beyond just the accuracy.
+TODO need something on interpreting the output beyond just the accuracy.
 -->
 
 ## Where to learn more

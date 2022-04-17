@@ -52,7 +52,7 @@ Github repo: https://github.com/stevelinberg/797MS-handbook
 
 ## Resources
 
-A lot of the material from this work is from the class textbook, @ISLR. I also find UNC geneticist Josh Starmer's [StatQuest](https://www.youtube.com/channel/UCtYLUTtgS3k1Fg4y5tAhLbw) video series on YouTube to be immensely helpful for simple explanations of statistics and machine learning concepts. 
+A lot of the material from this work is from the class textbook, @ISLR. I also find UNC geneticist Josh Starmer's [StatQuest](https://www.youtube.com/channel/UCtYLUTtgS3k1Fg4y5tAhLbw) video series on YouTube to be immensely helpful for simple explanations of statistics and machine learning concepts. His website [statquest.org](https://statquest.org) has many additional useful resources.
 
 ```{r include=FALSE}
 # automatically create a bib database for R packages

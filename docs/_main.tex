@@ -117,7 +117,7 @@
 
 \title{797ML Handbook}
 \author{Steve Linberg}
-\date{2022-04-07}
+\date{2022-04-17}
 
 \begin{document}
 \maketitle
@@ -179,7 +179,7 @@ Github repo: \url{https://github.com/stevelinberg/797MS-handbook}
 \hypertarget{resources}{%
 \section{Resources}\label{resources}}
 
-A lot of the material from this work is from the class textbook, \citet{ISLR}. I also find UNC geneticist Josh Starmer's \href{https://www.youtube.com/channel/UCtYLUTtgS3k1Fg4y5tAhLbw}{StatQuest} video series on YouTube to be immensely helpful for simple explanations of statistics and machine learning concepts.
+A lot of the material from this work is from the class textbook, \citet{ISLR}. I also find UNC geneticist Josh Starmer's \href{https://www.youtube.com/channel/UCtYLUTtgS3k1Fg4y5tAhLbw}{StatQuest} video series on YouTube to be immensely helpful for simple explanations of statistics and machine learning concepts. His website \href{https://statquest.org}{statquest.org} has many additional useful resources.
 
 \hypertarget{simple-linear-regression}{%
 \chapter{Simple Linear Regression}\label{simple-linear-regression}}
@@ -727,24 +727,23 @@ The fit should be used to predict the test data, and the model can be assessed o
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{boston\_lda.pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(boston\_lda.fits, boston[boston.test,])}
-\NormalTok{boston\_lda.class }\OtherTok{\textless{}{-}}\NormalTok{ boston\_lda.pred}\SpecialCharTok{$}\NormalTok{class}
-\FunctionTok{table}\NormalTok{(boston\_lda.class, boston[boston.test,]}\SpecialCharTok{$}\NormalTok{crim\_above\_med)}
+\NormalTok{boston\_lda.pred }\OtherTok{\textless{}{-}} \FunctionTok{predict}\NormalTok{(boston\_lda.fits, boston[boston.test, ])}
+\FunctionTok{table}\NormalTok{(boston\_lda.pred}\SpecialCharTok{$}\NormalTok{class, boston[boston.test, ]}\SpecialCharTok{$}\NormalTok{crim\_above\_med)}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
-##                 
-## boston_lda.class No Yes
-##              No  38  12
-##              Yes  3  49
+##      
+##       No Yes
+##   No  38  12
+##   Yes  3  49
 \end{verbatim}
 
 In this example, LDA made the correct categorization 87 times out of 102, with 3 false positives and 12 false negatives. Again, we can compute the prediction accuracy by the mean of the correct-to-wrong guesses:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\FunctionTok{mean}\NormalTok{(boston\_lda.class }\SpecialCharTok{==}\NormalTok{ boston[boston.test,]}\SpecialCharTok{$}\NormalTok{crim\_above\_med)}
+\FunctionTok{mean}\NormalTok{(boston\_lda.pred}\SpecialCharTok{$}\NormalTok{class }\SpecialCharTok{==}\NormalTok{ boston[boston.test, ]}\SpecialCharTok{$}\NormalTok{crim\_above\_med)}
 \end{Highlighting}
 \end{Shaded}
 
