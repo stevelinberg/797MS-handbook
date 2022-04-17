@@ -15,7 +15,7 @@ When to do it
 : When you're rounding out your exhaustive try-them-all process to try to determine the best classifier for your data after [linear discriminant analysis](#linear-discriminant-analysis) and [quadratic discriminant analysis](#quadratic-discriminant-analysis)
 
 How to do it
-: With the `naiveBayes()` function from the [e1071](https://cran.r-project.org/web/packages/e1071/index.html) library
+: With the `naiveBayes()` function from the [e1071](https://cran.r-project.org/package=e1071) library
 
 How to assess it
 : As with the other methods, assess it on test data after training and see if its accuracy is better than other methods

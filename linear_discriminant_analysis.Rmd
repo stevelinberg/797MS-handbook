@@ -52,7 +52,7 @@ boston.training[sample(nrow(boston), nrow(boston) * 0.8)] <- TRUE
 boston.test <- !boston.training
 ```
 
-And fit the above model to the training data using the `lda()` function from the [MASS](https://cran.r-project.org/web/packages/MASS/index.html) library^[Note to my fellow New Englanders: the MASS library is named for a book titled "Modern Applied Statistics with S", and although it does contain an earlier version of the Boston dataset (among many others), it has nothing to do with Massachusetts, and our Boston dataset comes from the ISLR2 library.] (note: there is no `family` argument as with `glm()` in [logistic regression](#logistic-regression), but the calls are otherwise identical):
+And fit the above model to the training data using the `lda()` function from the [MASS](https://cran.r-project.org/package=MASS) library^[Note to my fellow New Englanders: the MASS library is named for a book titled "Modern Applied Statistics with S", and although it does contain an earlier version of the Boston dataset (among many others), it has nothing to do with Massachusetts, and our Boston dataset comes from the ISLR2 library.] (note: there is no `family` argument as with `glm()` in [logistic regression](#logistic-regression), but the calls are otherwise identical):
 
 ```{r}
 boston_lda.fits <-

@@ -1,18 +1,24 @@
-# TODO: K-Nearest Neighbors {#k-nearest-neighbors}
+# K-Nearest Neighbors {#k-nearest-neighbors}
+
+```{r include=FALSE}
+library(tidyverse)
+library(ISLR2)
+library(class)
+```
 
 ## TL;DR
 
 What it does
-: TODO
+: K-Nearest Neighbors classifies observations by judging their proximity to other nearby classified neighbors.
 
 When to do it
-: TODO
+: When you're working through all of the various classification methods to see which one works the best for your data
 
 How to do it
-: TODO
+: With the `knn()` function from the [class](https://cran.r-project.org/package=class) library
 
 How to assess it
-: TODO
+: Check the prediction accuracy, as with the other classification methods
 
 ## What it does
 

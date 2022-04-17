@@ -164,7 +164,7 @@ div.csl-indent {
 <li><a href="./">797ML Handbook</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> About<span></span></a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> cover-image: path to the social sharing image like images/cover.jpg<span></span></a>
 <ul>
 <li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#authoring-guidelines"><i class="fa fa-check"></i><b>1.1</b> Authoring guidelines<span></span></a></li>
 <li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#contact"><i class="fa fa-check"></i><b>1.2</b> Contact<span></span></a></li>
@@ -226,7 +226,7 @@ div.csl-indent {
 <li class="chapter" data-level="7.5" data-path="naive-bayes.html"><a href="naive-bayes.html#how-to-assess-it-5"><i class="fa fa-check"></i><b>7.5</b> How to assess it<span></span></a></li>
 <li class="chapter" data-level="7.6" data-path="naive-bayes.html"><a href="naive-bayes.html#where-to-learn-more-5"><i class="fa fa-check"></i><b>7.6</b> Where to learn more<span></span></a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="k-nearest-neighbors.html"><a href="k-nearest-neighbors.html"><i class="fa fa-check"></i><b>8</b> TODO: K-Nearest Neighbors<span></span></a>
+<li class="chapter" data-level="8" data-path="k-nearest-neighbors.html"><a href="k-nearest-neighbors.html"><i class="fa fa-check"></i><b>8</b> K-Nearest Neighbors<span></span></a>
 <ul>
 <li class="chapter" data-level="8.1" data-path="k-nearest-neighbors.html"><a href="k-nearest-neighbors.html#tldr-6"><i class="fa fa-check"></i><b>8.1</b> TL;DR<span></span></a></li>
 <li class="chapter" data-level="8.2" data-path="k-nearest-neighbors.html"><a href="k-nearest-neighbors.html#what-it-does-6"><i class="fa fa-check"></i><b>8.2</b> What it does<span></span></a></li>
@@ -434,29 +434,29 @@ Assess the accuracy of the predictions on the test set after training
 <div id="how-to-do-it-3" class="section level2 hasAnchor" number="5.4">
 <h2><span class="header-section-number">5.4</span> How to do it<a href="linear-discriminant-analysis.html#how-to-do-it-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Again, using the Boston data from the <a href="logistic-regression.html#logistic-regression">logistic regression</a> chapter:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="linear-discriminant-analysis.html#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Boston)</span>
-<span id="cb18-2"><a href="linear-discriminant-analysis.html#cb18-2" aria-hidden="true" tabindex="-1"></a>boston <span class="ot">&lt;-</span> Boston <span class="sc">%&gt;%</span></span>
-<span id="cb18-3"><a href="linear-discriminant-analysis.html#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb18-4"><a href="linear-discriminant-analysis.html#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the categorical crim_above_med response variable</span></span>
-<span id="cb18-5"><a href="linear-discriminant-analysis.html#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">crim_above_med =</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(crim <span class="sc">&gt;</span> <span class="fu">median</span>(crim), <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>)),</span>
-<span id="cb18-6"><a href="linear-discriminant-analysis.html#cb18-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="linear-discriminant-analysis.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Boston)</span>
+<span id="cb1-2"><a href="linear-discriminant-analysis.html#cb1-2" aria-hidden="true" tabindex="-1"></a>boston <span class="ot">&lt;-</span> Boston <span class="sc">%&gt;%</span></span>
+<span id="cb1-3"><a href="linear-discriminant-analysis.html#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb1-4"><a href="linear-discriminant-analysis.html#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create the categorical crim_above_med response variable</span></span>
+<span id="cb1-5"><a href="linear-discriminant-analysis.html#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">crim_above_med =</span> <span class="fu">as.factor</span>(<span class="fu">ifelse</span>(crim <span class="sc">&gt;</span> <span class="fu">median</span>(crim), <span class="st">&quot;Yes&quot;</span>, <span class="st">&quot;No&quot;</span>)),</span>
+<span id="cb1-6"><a href="linear-discriminant-analysis.html#cb1-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 <p>We again split the data into training and test sets:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="linear-discriminant-analysis.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1235</span>)</span>
-<span id="cb19-2"><a href="linear-discriminant-analysis.html#cb19-2" aria-hidden="true" tabindex="-1"></a>boston.training <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">FALSE</span>, <span class="fu">nrow</span>(boston))</span>
-<span id="cb19-3"><a href="linear-discriminant-analysis.html#cb19-3" aria-hidden="true" tabindex="-1"></a>boston.training[<span class="fu">sample</span>(<span class="fu">nrow</span>(boston), <span class="fu">nrow</span>(boston) <span class="sc">*</span> <span class="fl">0.8</span>)] <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
-<span id="cb19-4"><a href="linear-discriminant-analysis.html#cb19-4" aria-hidden="true" tabindex="-1"></a>boston.test <span class="ot">&lt;-</span> <span class="sc">!</span>boston.training</span></code></pre></div>
-<p>And fit the above model to the training data using the <code>lda()</code> function from the <a href="https://cran.r-project.org/web/packages/MASS/index.html">MASS</a> library<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> (note: there is no <code>family</code> argument as with <code>glm()</code> in <a href="logistic-regression.html#logistic-regression">logistic regression</a>, but the calls are otherwise identical):</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="linear-discriminant-analysis.html#cb20-1" aria-hidden="true" tabindex="-1"></a>boston_lda.fits <span class="ot">&lt;-</span></span>
-<span id="cb20-2"><a href="linear-discriminant-analysis.html#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lda</span>(</span>
-<span id="cb20-3"><a href="linear-discriminant-analysis.html#cb20-3" aria-hidden="true" tabindex="-1"></a>    crim_above_med <span class="sc">~</span> nox,</span>
-<span id="cb20-4"><a href="linear-discriminant-analysis.html#cb20-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> boston,</span>
-<span id="cb20-5"><a href="linear-discriminant-analysis.html#cb20-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset =</span> boston.training,</span>
-<span id="cb20-6"><a href="linear-discriminant-analysis.html#cb20-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="linear-discriminant-analysis.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1235</span>)</span>
+<span id="cb2-2"><a href="linear-discriminant-analysis.html#cb2-2" aria-hidden="true" tabindex="-1"></a>boston.training <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">FALSE</span>, <span class="fu">nrow</span>(boston))</span>
+<span id="cb2-3"><a href="linear-discriminant-analysis.html#cb2-3" aria-hidden="true" tabindex="-1"></a>boston.training[<span class="fu">sample</span>(<span class="fu">nrow</span>(boston), <span class="fu">nrow</span>(boston) <span class="sc">*</span> <span class="fl">0.8</span>)] <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb2-4"><a href="linear-discriminant-analysis.html#cb2-4" aria-hidden="true" tabindex="-1"></a>boston.test <span class="ot">&lt;-</span> <span class="sc">!</span>boston.training</span></code></pre></div>
+<p>And fit the above model to the training data using the <code>lda()</code> function from the <a href="https://cran.r-project.org/package=MASS">MASS</a> library<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> (note: there is no <code>family</code> argument as with <code>glm()</code> in <a href="logistic-regression.html#logistic-regression">logistic regression</a>, but the calls are otherwise identical):</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="linear-discriminant-analysis.html#cb3-1" aria-hidden="true" tabindex="-1"></a>boston_lda.fits <span class="ot">&lt;-</span></span>
+<span id="cb3-2"><a href="linear-discriminant-analysis.html#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">lda</span>(</span>
+<span id="cb3-3"><a href="linear-discriminant-analysis.html#cb3-3" aria-hidden="true" tabindex="-1"></a>    crim_above_med <span class="sc">~</span> nox,</span>
+<span id="cb3-4"><a href="linear-discriminant-analysis.html#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> boston,</span>
+<span id="cb3-5"><a href="linear-discriminant-analysis.html#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">subset =</span> boston.training,</span>
+<span id="cb3-6"><a href="linear-discriminant-analysis.html#cb3-6" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
 </div>
 <div id="how-to-assess-it-3" class="section level2 hasAnchor" number="5.5">
 <h2><span class="header-section-number">5.5</span> How to assess it<a href="linear-discriminant-analysis.html#how-to-assess-it-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The fit can be directly examined:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="linear-discriminant-analysis.html#cb21-1" aria-hidden="true" tabindex="-1"></a>boston_lda.fits</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="linear-discriminant-analysis.html#cb4-1" aria-hidden="true" tabindex="-1"></a>boston_lda.fits</span></code></pre></div>
 <pre><code>## Call:
 ## lda(crim_above_med ~ nox, data = boston, , subset = boston.training)
 ## 
@@ -473,14 +473,14 @@ Assess the accuracy of the predictions on the test set after training
 ##          LD1
 ## nox 12.29052</code></pre>
 <p>In the above output, the <code>Prior probabilities of groups</code> information is just the percentage of observations in each of the outcome categories:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="linear-discriminant-analysis.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">mean</span>(boston[boston.training,]<span class="sc">$</span>crim_above_med <span class="sc">==</span> <span class="st">&quot;Yes&quot;</span>)</span>
-<span id="cb23-2"><a href="linear-discriminant-analysis.html#cb23-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.4752475</span></span>
-<span id="cb23-3"><a href="linear-discriminant-analysis.html#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">mean</span>(boston[boston.training,]<span class="sc">$</span>crim_above_med <span class="sc">==</span> <span class="st">&quot;No&quot;</span>)</span>
-<span id="cb23-4"><a href="linear-discriminant-analysis.html#cb23-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.5247525</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="linear-discriminant-analysis.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">mean</span>(boston[boston.training,]<span class="sc">$</span>crim_above_med <span class="sc">==</span> <span class="st">&quot;Yes&quot;</span>)</span>
+<span id="cb6-2"><a href="linear-discriminant-analysis.html#cb6-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.4752475</span></span>
+<span id="cb6-3"><a href="linear-discriminant-analysis.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">mean</span>(boston[boston.training,]<span class="sc">$</span>crim_above_med <span class="sc">==</span> <span class="st">&quot;No&quot;</span>)</span>
+<span id="cb6-4"><a href="linear-discriminant-analysis.html#cb6-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.5247525</span></span></code></pre></div>
 <p>The <code>Group means</code> section shows the means of the predictor variable (<code>nox</code> in this case) for each of the categories:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="linear-discriminant-analysis.html#cb24-1" aria-hidden="true" tabindex="-1"></a>boston[boston.training, ] <span class="sc">%&gt;%</span></span>
-<span id="cb24-2"><a href="linear-discriminant-analysis.html#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(crim_above_med) <span class="sc">%&gt;%</span></span>
-<span id="cb24-3"><a href="linear-discriminant-analysis.html#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="st">&quot;Group means&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(nox))</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="linear-discriminant-analysis.html#cb7-1" aria-hidden="true" tabindex="-1"></a>boston[boston.training, ] <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="linear-discriminant-analysis.html#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(crim_above_med) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="linear-discriminant-analysis.html#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="st">&quot;Group means&quot;</span> <span class="ot">=</span> <span class="fu">mean</span>(nox))</span></code></pre></div>
 <pre><code>## # A tibble: 2 × 2
 ##   crim_above_med `Group means`
 ##   &lt;fct&gt;                  &lt;dbl&gt;
@@ -488,20 +488,20 @@ Assess the accuracy of the predictions on the test set after training
 ## 2 Yes                    0.636</code></pre>
 <p>And the “Coefficient” is the linear coefficient for the predictor variable <code>nox</code>, which determines the slope of the line that separates the categories.</p>
 <p>The fit can be plotted:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="linear-discriminant-analysis.html#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boston_lda.fits)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="linear-discriminant-analysis.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(boston_lda.fits)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <!--
 TODO: explain the blue legos, what are we looking at?
 -->
 <p>The fit should be used to predict the test data, and the model can be assessed on its results:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="linear-discriminant-analysis.html#cb27-1" aria-hidden="true" tabindex="-1"></a>boston_lda.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(boston_lda.fits, boston[boston.test, ])</span>
-<span id="cb27-2"><a href="linear-discriminant-analysis.html#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(boston_lda.pred<span class="sc">$</span>class, boston[boston.test, ]<span class="sc">$</span>crim_above_med)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="linear-discriminant-analysis.html#cb10-1" aria-hidden="true" tabindex="-1"></a>boston_lda.pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(boston_lda.fits, boston[boston.test, ])</span>
+<span id="cb10-2"><a href="linear-discriminant-analysis.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(boston_lda.pred<span class="sc">$</span>class, boston[boston.test, ]<span class="sc">$</span>crim_above_med)</span></code></pre></div>
 <pre><code>##      
 ##       No Yes
 ##   No  38  12
 ##   Yes  3  49</code></pre>
 <p>In this example, LDA made the correct categorization 87 times out of 102, with 3 false positives and 12 false negatives. Again, we can compute the prediction accuracy by the mean of the correct-to-wrong guesses:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="linear-discriminant-analysis.html#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(boston_lda.pred<span class="sc">$</span>class <span class="sc">==</span> boston[boston.test, ]<span class="sc">$</span>crim_above_med)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="linear-discriminant-analysis.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(boston_lda.pred<span class="sc">$</span>class <span class="sc">==</span> boston[boston.test, ]<span class="sc">$</span>crim_above_med)</span></code></pre></div>
 <pre><code>## [1] 0.8529412</code></pre>
 <p>If the accuracy rate is good enough for your purposes, you can use the fit in the same manner to make predictions for new data.</p>
 <!--
