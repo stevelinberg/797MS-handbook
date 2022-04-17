@@ -623,7 +623,7 @@ Like with linear regression, the ``multiple'' flavor of logistic regression work
 \begin{description}
 \tightlist
 \item[What it does]
-Separates observations into categories, like logistic regression, but using category means and variances for separation rather than probabilities
+Separates observations into categories, similar \protect\hyperlink{logistic-regression}{logistic regression}, but creating actual groups (separated by a line) rather than per-observation probabilities
 \item[When to do it]
 When exploring various classifiers to see which works best for a given data set
 \item[How to do it]
@@ -671,7 +671,7 @@ We again split the data into training and test sets:
 \end{Highlighting}
 \end{Shaded}
 
-And fit the above model to the training data using the \texttt{lda()} function from the \href{https://cran.r-project.org/web/packages/MASS/index.html}{MASS} library\footnote{Note to my fellow New Englanders: the MASS library is named for a book titled ``Modern Applied Statistics with S'', and although it does contain an earlier version of the Boston dataset (among many others), it has nothing to do with Massachusetts, and our Boston dataset comes from the ISLR2 library.} (note: there is no \texttt{family} argument as with \texttt{glm()}, but the calls are otherwise identical):
+And fit the above model to the training data using the \texttt{lda()} function from the \href{https://cran.r-project.org/web/packages/MASS/index.html}{MASS} library\footnote{Note to my fellow New Englanders: the MASS library is named for a book titled ``Modern Applied Statistics with S'', and although it does contain an earlier version of the Boston dataset (among many others), it has nothing to do with Massachusetts, and our Boston dataset comes from the ISLR2 library.} (note: there is no \texttt{family} argument as with \texttt{glm()} in \protect\hyperlink{logistic-regression}{logistic regression}, but the calls are otherwise identical):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -713,7 +713,38 @@ The fit can be directly examined:
 ## nox 12.29052
 \end{verbatim}
 
-And plotted:
+In the above output, the \texttt{Prior\ probabilities\ of\ groups} information is just the percentage of observations in each of the outcome categories:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\SpecialCharTok{\textgreater{}} \FunctionTok{mean}\NormalTok{(boston[boston.training,]}\SpecialCharTok{$}\NormalTok{crim\_above\_med }\SpecialCharTok{==} \StringTok{"Yes"}\NormalTok{)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\FloatTok{0.4752475}
+\SpecialCharTok{\textgreater{}} \FunctionTok{mean}\NormalTok{(boston[boston.training,]}\SpecialCharTok{$}\NormalTok{crim\_above\_med }\SpecialCharTok{==} \StringTok{"No"}\NormalTok{)}
+\NormalTok{[}\DecValTok{1}\NormalTok{] }\FloatTok{0.5247525}
+\end{Highlighting}
+\end{Shaded}
+
+The \texttt{Group\ means} section shows the means of the predictor variable (\texttt{nox} in this case) for each of the categories:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{boston[boston.training, ] }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(crim\_above\_med) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\StringTok{"Group means"} \OtherTok{=} \FunctionTok{mean}\NormalTok{(nox))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 2
+##   crim_above_med `Group means`
+##   <fct>                  <dbl>
+## 1 No                     0.471
+## 2 Yes                    0.636
+\end{verbatim}
+
+And the ``Coefficient'' is the linear coefficient for the predictor variable \texttt{nox}, which determines the slope of the line that separates the categories.
+
+The fit can be plotted:
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -721,7 +752,7 @@ And plotted:
 \end{Highlighting}
 \end{Shaded}
 
-\includegraphics{_main_files/figure-latex/unnamed-chunk-22-1.pdf}
+\includegraphics{_main_files/figure-latex/unnamed-chunk-23-1.pdf}
 
 The fit should be used to predict the test data, and the model can be assessed on its results:
 
@@ -750,6 +781,8 @@ In this example, LDA made the correct categorization 87 times out of 102, with 3
 \begin{verbatim}
 ## [1] 0.8529412
 \end{verbatim}
+
+If the accuracy rate is good enough for your purposes, you can use the fit in the same manner to make predictions for new data.
 
 \hypertarget{where-to-learn-more-3}{%
 \section{Where to learn more}\label{where-to-learn-more-3}}
