@@ -9,7 +9,7 @@ library(MASS)
 ## TL;DR
 
 What it does
-: Separates observations into categories, like logistic regression, but using category means and variances for separation rather than probabilities
+: Separates observations into categories, similar [logistic regression](#logistic-regression), but creating actual groups (separated by a line) rather than per-observation probabilities
 
 When to do it
 : When exploring various classifiers to see which works best for a given data set
@@ -52,7 +52,7 @@ boston.training[sample(nrow(boston), nrow(boston) * 0.8)] <- TRUE
 boston.test <- !boston.training
 ```
 
-And fit the above model to the training data using the `lda()` function from the [MASS](https://cran.r-project.org/web/packages/MASS/index.html) library^[Note to my fellow New Englanders: the MASS library is named for a book titled "Modern Applied Statistics with S", and although it does contain an earlier version of the Boston dataset (among many others), it has nothing to do with Massachusetts, and our Boston dataset comes from the ISLR2 library.] (note: there is no `family` argument as with `glm()`, but the calls are otherwise identical):
+And fit the above model to the training data using the `lda()` function from the [MASS](https://cran.r-project.org/web/packages/MASS/index.html) library^[Note to my fellow New Englanders: the MASS library is named for a book titled "Modern Applied Statistics with S", and although it does contain an earlier version of the Boston dataset (among many others), it has nothing to do with Massachusetts, and our Boston dataset comes from the ISLR2 library.] (note: there is no `family` argument as with `glm()` in [logistic regression](#logistic-regression), but the calls are otherwise identical):
 
 ```{r}
 boston_lda.fits <-
@@ -71,11 +71,26 @@ The fit can be directly examined:
 boston_lda.fits
 ```
 
-<!--
-TODO: explain some of that
--->
+In the above output, the `Prior probabilities of groups` information is just the percentage of observations in each of the outcome categories:
 
-And plotted:
+```r
+> mean(boston[boston.training,]$crim_above_med == "Yes")
+[1] 0.4752475
+> mean(boston[boston.training,]$crim_above_med == "No")
+[1] 0.5247525
+```
+
+The `Group means` section shows the means of the predictor variable (`nox` in this case) for each of the categories:
+
+```{r}
+boston[boston.training, ] %>%
+  group_by(crim_above_med) %>%
+  summarize("Group means" = mean(nox))
+```
+
+And the "Coefficient" is the linear coefficient for the predictor variable `nox`, which determines the slope of the line that separates the categories.
+
+The fit can be plotted:
 
 ```{r}
 plot(boston_lda.fits)
@@ -97,6 +112,8 @@ In this example, LDA made the correct categorization 87 times out of 102, with 3
 ```{r}
 mean(boston_lda.pred$class == boston[boston.test, ]$crim_above_med)
 ```
+
+If the accuracy rate is good enough for your purposes, you can use the fit in the same manner to make predictions for new data.
 
 <!--
 TODO need something on interpreting the output beyond just the accuracy.
