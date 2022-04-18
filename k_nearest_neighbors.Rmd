@@ -70,7 +70,7 @@ test.X <- cbind(boston$nox, boston$something_else)[boston.test, ]
 
 Note that it is highly recommended to standardize all columns to the same scale when using more than one, unless a weighted scale is desired, and even then it would likely be better to standardize first and then scale from there.
 
-```{r}
+```r
 train.X <- cbind(scale(boston$nox), scale(boston$something_else))[boston.training, ]
 test.X <- cbind(scale(boston$nox), scale(boston$something_else))[boston.test, ]
 ```
@@ -99,6 +99,8 @@ mean(knn.pred == boston[boston.test,]$crim_above_med)
 ```
 
 In this case, we achieved 97% accuracy with `knn()` and $k$ = 1. If we didn't get a good enough result, we could run `knn()` again with different values for $k$ to see if we could improve the results. The best result here can then be compared against the results with other classification methods.
+
+(It's unusual for $k$ = 1 to be the best number, as it will tend to overfit; some exploration will be needed to find the best results, and it's simple enough to try a range in a loop.)
 
 ## Where to learn more
 

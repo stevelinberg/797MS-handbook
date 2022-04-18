@@ -671,7 +671,7 @@ We again split the data into training and test sets:
 \end{Highlighting}
 \end{Shaded}
 
-And fit the above model to the training data using the \texttt{lda()} function from the \href{https://cran.r-project.org/web/packages/MASS/index.html}{MASS} library\footnote{Note to my fellow New Englanders: the MASS library is named for a book titled ``Modern Applied Statistics with S'', and although it does contain an earlier version of the Boston dataset (among many others), it has nothing to do with Massachusetts, and our Boston dataset comes from the ISLR2 library.} (note: there is no \texttt{family} argument as with \texttt{glm()} in \protect\hyperlink{logistic-regression}{logistic regression}, but the calls are otherwise identical):
+And fit the above model to the training data using the \texttt{lda()} function from the \href{https://cran.r-project.org/package=MASS}{MASS} library\footnote{Note to my fellow New Englanders: the MASS library is named for a book titled ``Modern Applied Statistics with S'', and although it does contain an earlier version of the Boston dataset (among many others), it has nothing to do with Massachusetts, and our Boston dataset comes from the ISLR2 library.} (note: there is no \texttt{family} argument as with \texttt{glm()} in \protect\hyperlink{logistic-regression}{logistic regression}, but the calls are otherwise identical):
 
 \begin{Shaded}
 \begin{Highlighting}[]
@@ -808,7 +808,7 @@ Assigns observations to categories like \protect\hyperlink{linear-discriminant-a
 \item[When to do it]
 When \protect\hyperlink{linear-discriminant-analysis}{linear discriminant analysis} isn't giving good enough results (esp.~if the dataset is very large)
 \item[How to do it]
-With the \texttt{qda()} function from the \href{https://cran.r-project.org/web/packages/MASS/index.html}{MASS} library, using training and testing sets
+With the \texttt{qda()} function from the \href{https://cran.r-project.org/package=MASS}{MASS} library, using training and testing sets
 \item[How to assess it]
 Assess the accuracy of the predictions on the test set after training
 \end{description}
@@ -952,7 +952,7 @@ Provides yet another way to try to classify observations into one or more catego
 \item[When to do it]
 When you're rounding out your exhaustive try-them-all process to try to determine the best classifier for your data after \protect\hyperlink{linear-discriminant-analysis}{linear discriminant analysis} and \protect\hyperlink{quadratic-discriminant-analysis}{quadratic discriminant analysis}
 \item[How to do it]
-With the \texttt{naiveBayes()} function from the \href{https://cran.r-project.org/web/packages/e1071/index.html}{e1071} library
+With the \texttt{naiveBayes()} function from the \href{https://cran.r-project.org/package=e1071}{e1071} library
 \item[How to assess it]
 As with the other methods, assess it on test data after training and see if its accuracy is better than other methods
 \end{description}
@@ -1108,7 +1108,7 @@ We see again here that Naive Bayes performed identically to \texttt{lda()} and \
 \end{itemize}
 
 \hypertarget{k-nearest-neighbors}{%
-\chapter{TODO: K-Nearest Neighbors}\label{k-nearest-neighbors}}
+\chapter{K-Nearest Neighbors}\label{k-nearest-neighbors}}
 
 \hypertarget{tldr-6}{%
 \section{TL;DR}\label{tldr-6}}
@@ -1116,39 +1116,143 @@ We see again here that Naive Bayes performed identically to \texttt{lda()} and \
 \begin{description}
 \tightlist
 \item[What it does]
-TODO
+K-Nearest Neighbors classifies observations by judging their proximity to (\(k\)) other nearby classified neighbors.
 \item[When to do it]
-TODO
+When you're working through all of the various classification methods to see which one works the best for your data
 \item[How to do it]
-TODO
+With the \texttt{knn()} function from the \href{https://cran.r-project.org/package=class}{class} library
 \item[How to assess it]
-TODO
+Check the prediction accuracy, as with the other classification methods
 \end{description}
 
 \hypertarget{what-it-does-6}{%
 \section{What it does}\label{what-it-does-6}}
 
-TODO
+K-Nearest Neighbors starts with known categories of clustered data, and assigns new data to one of these categories by grouping it with its (\(k\)) nearest neighbor(s). This is judged in whatever dimensional space is appropriate to the number of predictor variables; if only using one predictor, as in the example here, then the points are simply arranged on a line; 2 predictors puts them on a plane, and so forth.
+
+Once the new observation is located against the known categories, a sort of ``lasso'' extends out from the point in all available directions until it contains \(k\) other neighbors. Whichever category has the most points is assigned to the new observation.
 
 \hypertarget{when-to-do-it-6}{%
 \section{When to do it}\label{when-to-do-it-6}}
 
-TODO
+When you're still looking for the best classification method for your data. Maybe this will be it this time!
 
 \hypertarget{how-to-do-it-6}{%
 \section{How to do it}\label{how-to-do-it-6}}
 
-TODO
+We will continue with the Boston data set and the same training split.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(Boston)}
+\NormalTok{boston }\OtherTok{\textless{}{-}}\NormalTok{ Boston }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \CommentTok{\# Create the categorical crim\_above\_med response variable}
+    \AttributeTok{crim\_above\_med =} \FunctionTok{as.factor}\NormalTok{(}\FunctionTok{ifelse}\NormalTok{(crim }\SpecialCharTok{\textgreater{}} \FunctionTok{median}\NormalTok{(crim), }\StringTok{"Yes"}\NormalTok{, }\StringTok{"No"}\NormalTok{)),}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+We again split the data into training and test sets:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1235}\NormalTok{)}
+\NormalTok{boston.training }\OtherTok{\textless{}{-}} \FunctionTok{rep}\NormalTok{(}\ConstantTok{FALSE}\NormalTok{, }\FunctionTok{nrow}\NormalTok{(boston))}
+\NormalTok{boston.training[}\FunctionTok{sample}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(boston), }\FunctionTok{nrow}\NormalTok{(boston) }\SpecialCharTok{*} \FloatTok{0.8}\NormalTok{)] }\OtherTok{\textless{}{-}} \ConstantTok{TRUE}
+\NormalTok{boston.test }\OtherTok{\textless{}{-}} \SpecialCharTok{!}\NormalTok{boston.training}
+\end{Highlighting}
+\end{Shaded}
+
+Unlike the other classification methods used so far, the \texttt{knn()} function needs the data columns in a simple matrix. Also, we supply the training and test data together in a single call to \texttt{knn()}.
+
+So first, create the matrices from the data columns. We only have one column in our model here, so we need to convert it to a \texttt{data.frame} because \texttt{knn()} won't accept a plain vector:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train.X }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(boston[boston.training, ]}\SpecialCharTok{$}\NormalTok{nox)}
+\NormalTok{test.X }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(boston[boston.test, ]}\SpecialCharTok{$}\NormalTok{nox)}
+\end{Highlighting}
+\end{Shaded}
+
+If we had more than one column, we could instead bind them with \texttt{cbind()}:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train.X }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(boston}\SpecialCharTok{$}\NormalTok{nox, boston}\SpecialCharTok{$}\NormalTok{something\_else)[boston.training, ]}
+\NormalTok{test.X }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(boston}\SpecialCharTok{$}\NormalTok{nox, boston}\SpecialCharTok{$}\NormalTok{something\_else)[boston.test, ]}
+\end{Highlighting}
+\end{Shaded}
+
+Note that it is highly recommended to standardize all columns to the same scale when using more than one, unless a weighted scale is desired, and even then it would likely be better to standardize first and then scale from there.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{train.X }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\FunctionTok{scale}\NormalTok{(boston}\SpecialCharTok{$}\NormalTok{nox), }\FunctionTok{scale}\NormalTok{(boston}\SpecialCharTok{$}\NormalTok{something\_else))[boston.training, ]}
+\NormalTok{test.X }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\FunctionTok{scale}\NormalTok{(boston}\SpecialCharTok{$}\NormalTok{nox), }\FunctionTok{scale}\NormalTok{(boston}\SpecialCharTok{$}\NormalTok{something\_else))[boston.test, ]}
+\end{Highlighting}
+\end{Shaded}
+
+We also extract the outcome variable into a vector.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Also extract the outcome variable.}
+\NormalTok{train.crim\_above\_med }\OtherTok{\textless{}{-}}\NormalTok{ boston}\SpecialCharTok{$}\NormalTok{crim\_above\_med[boston.training]}
+\end{Highlighting}
+\end{Shaded}
+
+Now set a seed and run the \texttt{knn()} function. Select a value for \(k\), the number of nearest neighbors to use in the classifier; here we will start with 1, which means each new observation will be classified according to its single closest neighbor. (Higher values will decide based on the majority of the \(k\) nearest neighbors; keeping \(k\) prime, if more than 1, will avoid ties; alternately, ties can be randomly assigned.)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{set.seed}\NormalTok{(}\DecValTok{1235}\NormalTok{)}
+\NormalTok{knn.pred }\OtherTok{\textless{}{-}} \FunctionTok{knn}\NormalTok{(train.X, test.X, train.crim\_above\_med, }\AttributeTok{k =} \DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
 
 \hypertarget{how-to-assess-it-6}{%
 \section{How to assess it}\label{how-to-assess-it-6}}
 
-TODO
+Check the table of predictions against the test data and see how it did.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(knn.pred, boston[boston.test,]}\SpecialCharTok{$}\NormalTok{crim\_above\_med)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##         
+## knn.pred No Yes
+##      No  40   2
+##      Yes  1  59
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{mean}\NormalTok{(knn.pred }\SpecialCharTok{==}\NormalTok{ boston[boston.test,]}\SpecialCharTok{$}\NormalTok{crim\_above\_med)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 0.9705882
+\end{verbatim}
+
+In this case, we achieved 97\% accuracy with \texttt{knn()} and \(k\) = 1. If we didn't get a good enough result, we could run \texttt{knn()} again with different values for \(k\) to see if we could improve the results. The best result here can then be compared against the results with other classification methods.
+
+(It's unusual for \(k\) = 1 to be the best number, as it will tend to overfit; some exploration will be needed to find the best results, and it's simple enough to try a range in a loop.)
 
 \hypertarget{where-to-learn-more-6}{%
 \section{Where to learn more}\label{where-to-learn-more-6}}
 
-TODO
+\begin{itemize}
+\tightlist
+\item
+  Chapter 4.7.6 (lab) in \citet{ISLR}
+\item
+  \href{https://www.youtube.com/watch?v=HVXime0nQeI}{StatQuest: K nearest neighbors}
+\end{itemize}
 
 \hypertarget{poisson-regression}{%
 \chapter{TODO: Poisson Regression}\label{poisson-regression}}
