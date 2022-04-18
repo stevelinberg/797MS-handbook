@@ -9,7 +9,7 @@ library(class)
 ## TL;DR
 
 What it does
-: K-Nearest Neighbors classifies observations by judging their proximity to other nearby classified neighbors.
+: K-Nearest Neighbors classifies observations by judging their proximity to ($k$) other nearby classified neighbors.
 
 When to do it
 : When you're working through all of the various classification methods to see which one works the best for your data
@@ -22,21 +22,86 @@ How to assess it
 
 ## What it does
 
-TODO
+K-Nearest Neighbors starts with known categories of clustered data, and assigns new data to one of these categories by grouping it with its ($k$) nearest neighbor(s). This is judged in whatever dimensional space is appropriate to the number of predictor variables; if only using one predictor, as in the example here, then the points are simply arranged on a line; 2 predictors puts them on a plane, and so forth. 
+
+Once the new observation is located against the known categories, a sort of "lasso" extends out from the point in all available directions until it contains $k$ other neighbors. Whichever category has the most points is assigned to the new observation.
 
 ## When to do it
 
-TODO
+When you're still looking for the best classification method for your data. Maybe this will be it this time!
 
 ## How to do it
 
-TODO
+We will continue with the Boston data set and the same training split.
+
+```{r}
+data(Boston)
+boston <- Boston %>%
+  mutate(
+    # Create the categorical crim_above_med response variable
+    crim_above_med = as.factor(ifelse(crim > median(crim), "Yes", "No")),
+  )
+```
+
+We again split the data into training and test sets:
+
+```{r}
+set.seed(1235)
+boston.training <- rep(FALSE, nrow(boston))
+boston.training[sample(nrow(boston), nrow(boston) * 0.8)] <- TRUE
+boston.test <- !boston.training
+```
+
+Unlike the other classification methods used so far, the `knn()` function needs the data columns in a simple matrix. Also, we supply the training and test data together in a single call to `knn()`.
+
+So first, create the matrices from the data columns. We only have one column in our model here, so we need to convert it to a `data.frame` because `knn()` won't accept a plain vector:
+
+```{r}
+train.X <- as.data.frame(boston[boston.training, ]$nox)
+test.X <- as.data.frame(boston[boston.test, ]$nox)
+```
+
+If we had more than one column, we could instead bind them with `cbind()`:
+
+```r
+train.X <- cbind(boston$nox, boston$something_else)[boston.training, ]
+test.X <- cbind(boston$nox, boston$something_else)[boston.test, ]
+```
+
+Note that it is highly recommended to standardize all columns to the same scale when using more than one, unless a weighted scale is desired, and even then it would likely be better to standardize first and then scale from there.
+
+```{r}
+train.X <- cbind(scale(boston$nox), scale(boston$something_else))[boston.training, ]
+test.X <- cbind(scale(boston$nox), scale(boston$something_else))[boston.test, ]
+```
+
+We also extract the outcome variable into a vector.
+
+```{r}
+# Also extract the outcome variable.
+train.crim_above_med <- boston$crim_above_med[boston.training]
+```
+
+Now set a seed and run the `knn()` function. Select a value for $k$, the number of nearest neighbors to use in the classifier; here we will start with 1, which means each new observation will be classified according to its single closest neighbor. (Higher values will decide based on the majority of the $k$ nearest neighbors; keeping $k$ prime, if more than 1, will avoid ties; alternately, ties can be randomly assigned.)
+
+```{r}
+set.seed(1235)
+knn.pred <- knn(train.X, test.X, train.crim_above_med, k = 1)
+```
 
 ## How to assess it
 
-TODO
+Check the table of predictions against the test data and see how it did.
+
+```{r}
+table(knn.pred, boston[boston.test,]$crim_above_med)
+mean(knn.pred == boston[boston.test,]$crim_above_med)
+```
+
+In this case, we achieved 97% accuracy with `knn()` and $k$ = 1. If we didn't get a good enough result, we could run `knn()` again with different values for $k$ to see if we could improve the results. The best result here can then be compared against the results with other classification methods.
 
 ## Where to learn more
 
-TODO
+- Chapter 4.7.6 (lab) in @ISLR
+- [StatQuest: K nearest neighbors](https://www.youtube.com/watch?v=HVXime0nQeI)
 
